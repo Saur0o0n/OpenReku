@@ -4,6 +4,7 @@
 	(generator_version "10.0")
 	(uuid "b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5")
 	(paper "A3")
+(title_block (title "OpenReku - ESP32 / zasilanie / wentylatory") (date "2026-10-01") (rev "1.1"))
 	(lib_symbols
 (symbol "Connector_Generic:Conn_01x06"
 			(pin_names
@@ -3302,7 +3303,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_1206_3216Metric"
 			(at 52.07 101.84 0)
 			(hide yes)
 			(show_name no)
@@ -3342,7 +3343,7 @@
 			(uuid "d4e9e159-a8bc-534d-b8e2-6275e2f88f44")
 		)
 		(instances
-			(project "Rekuperator"
+			(project "OpenReku"
 				(path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5"
 					(reference "C3")
 					(unit 1)
@@ -3533,7 +3534,7 @@
 			(uuid "116ff07d-eceb-5785-afd1-db427fc7db45")
 		)
 		(instances
-			(project "Rekuperator"
+			(project "OpenReku"
 				(path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5"
 					(reference "U1")
 					(unit 1)
@@ -3572,7 +3573,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_1206_3216Metric"
 			(at 52.07 116.84 0)
 			(hide yes)
 			(show_name no)
@@ -3612,7 +3613,7 @@
 			(uuid "95a7198c-bb05-561a-8449-335bac67a229")
 		)
 		(instances
-			(project "Rekuperator"
+			(project "OpenReku"
 				(path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5"
 					(reference "C4")
 					(unit 1)
@@ -3694,7 +3695,7 @@
 			(uuid "5c798ce9-a153-4ddc-951a-6a1304e0a7a7")
 		)
 		(instances
-			(project "Rekuperator"
+			(project "OpenReku"
 				(path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5"
 					(reference "U2")
 					(unit 1)
@@ -3773,7 +3774,7 @@
 			(uuid "33917643-d6e0-5277-9a2c-60899c282517")
 		)
 		(instances
-			(project "Rekuperator"
+			(project "OpenReku"
 				(path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5"
 					(reference "C1")
 					(unit 1)
@@ -3852,7 +3853,7 @@
 			(uuid "6722b7f6-b088-5fe7-a948-aa86435865f7")
 		)
 		(instances
-			(project "Rekuperator"
+			(project "OpenReku"
 				(path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5"
 					(reference "C2")
 					(unit 1)
@@ -3869,8 +3870,8 @@
 
 (symbol (lib_id "Device:R") (at 165.1000 101.6000 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "b7eb801f-81ea-428d-bf91-0c73ee98c964") (property "Reference" "R1" (at 170.1000 99.6000 0)  (effects (font (size 1 1))))
 (property "Value" "10k" (at 170.1000 103.6000 0)  (effects (font (size 1 1))))
-(property "Footprint" "Resistor_SMD:R_0603_1608Metric" (at 165.1000 101.6000 0) (hide yes) (effects (font (size 1 1))))
- (pin "1" (uuid "d3547488-2eb9-402b-be23-602db44d5aa7"))(pin "2" (uuid "6e23be89-b5d1-4ea6-8cc3-5a12655f3775"))(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "R1") (unit 1)))))
+(property "Footprint" "Resistor_SMD:R_1206_3216Metric" (at 165.1000 101.6000 0) (hide yes) (effects (font (size 1 1))))
+ (pin "1" (uuid "d3547488-2eb9-402b-be23-602db44d5aa7"))(pin "2" (uuid "6e23be89-b5d1-4ea6-8cc3-5a12655f3775"))(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "R1") (unit 1)))))
 (wire (pts (xy 165.1000 97.7900) (xy 165.1000 93.9800)) (stroke (width 0) (type default)) (uuid "188e81fc-932b-4085-824c-6ab4257b6bab"))
 (global_label "+3V3" (shape input) (at 165.1 93.98 180) (effects (font (size 1 1)) (justify right)) (uuid "07657098-3cf8-4b2f-b2a6-db58d978905e"))
 (wire (pts (xy 165.1000 105.4100) (xy 165.1000 111.7600)) (stroke (width 0) (type default)) (uuid "208dfcb0-d8d8-4d9b-bb6e-425cc64e3d16"))
@@ -3880,15 +3881,15 @@
 (symbol (lib_id "Switch:SW_Push") (at 180.3400 111.7600 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "36a7559c-83fa-42a7-9f4a-d52726f7d812") (property "Reference" "SW2" (at 180.3400 104.7600 0)  (effects (font (size 1 1))))
 (property "Value" "RESET" (at 180.3400 107.7600 0)  (effects (font (size 1 1))))
 (property "Footprint" "Button_Switch_THT:SW_PUSH_6mm" (at 180.3400 107.7600 0) (hide yes) (effects (font (size 1 1))))
- (pin "1" (uuid "8f9b2d8c-81d3-4812-a932-3d71dac8fe79"))(pin "2" (uuid "667673ee-e869-44ee-be2f-c9c0fecf0e14"))(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "SW2") (unit 1)))))
+ (pin "1" (uuid "8f9b2d8c-81d3-4812-a932-3d71dac8fe79"))(pin "2" (uuid "667673ee-e869-44ee-be2f-c9c0fecf0e14"))(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "SW2") (unit 1)))))
 (wire (pts (xy 165.1000 111.7600) (xy 175.2600 111.7600)) (stroke (width 0) (type default)) (uuid "c5e352ef-5b7b-4432-b773-a5df0ec8f9f7"))
 (wire (pts (xy 185.4200 111.7600) (xy 190.5000 111.7600)) (stroke (width 0) (type default)) (uuid "5f4e6b97-a211-4903-a7a5-2c449578326f"))
 (wire (pts (xy 190.5000 111.7600) (xy 190.5000 127.0000)) (stroke (width 0) (type default)) (uuid "9e4ac47c-34a4-42cf-a67b-9e64cdf54a5e"))
 (global_label "GND" (shape input) (at 190.5 127.0 180) (effects (font (size 1 1)) (justify right)) (uuid "cc16ca25-cbb4-43a7-a579-a5af4b694298"))
 (symbol (lib_id "Device:R") (at 220.9800 101.6000 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "f3278fae-385c-472b-bbd3-3f98a78e53d3") (property "Reference" "R2" (at 225.9800 99.6000 0)  (effects (font (size 1 1))))
 (property "Value" "10k" (at 225.9800 103.6000 0)  (effects (font (size 1 1))))
-(property "Footprint" "Resistor_SMD:R_0603_1608Metric" (at 220.9800 101.6000 0) (hide yes) (effects (font (size 1 1))))
- (pin "1" (uuid "dca0b070-c6b1-436e-94fe-c9f258bb0a80"))(pin "2" (uuid "9ed19fe0-bdeb-4cd3-b6cd-fbd934593e1a"))(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "R2") (unit 1)))))
+(property "Footprint" "Resistor_SMD:R_1206_3216Metric" (at 220.9800 101.6000 0) (hide yes) (effects (font (size 1 1))))
+ (pin "1" (uuid "dca0b070-c6b1-436e-94fe-c9f258bb0a80"))(pin "2" (uuid "9ed19fe0-bdeb-4cd3-b6cd-fbd934593e1a"))(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "R2") (unit 1)))))
 (wire (pts (xy 220.9800 97.7900) (xy 220.9800 93.9800)) (stroke (width 0) (type default)) (uuid "568ead6e-a2e6-4891-84bb-474ffb5e3eff"))
 (global_label "+3V3" (shape input) (at 220.98 93.98 180) (effects (font (size 1 1)) (justify right)) (uuid "71c67e01-0ebb-4ee4-a6a3-14342d08a9ba"))
 (wire (pts (xy 220.9800 105.4100) (xy 220.9800 111.7600)) (stroke (width 0) (type default)) (uuid "afe9590b-c9f2-4e30-b296-f9d886a75502"))
@@ -3898,15 +3899,15 @@
 (symbol (lib_id "Switch:SW_Push") (at 236.2200 111.7600 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "8fafb75b-8030-4ccd-8853-b1f8118a7946") (property "Reference" "SW1" (at 236.2200 104.7600 0)  (effects (font (size 1 1))))
 (property "Value" "BOOT" (at 236.2200 107.7600 0)  (effects (font (size 1 1))))
 (property "Footprint" "Button_Switch_THT:SW_PUSH_6mm" (at 236.2200 107.7600 0) (hide yes) (effects (font (size 1 1))))
- (pin "1" (uuid "226c58ef-8e57-4f7b-8e26-7244461f698a"))(pin "2" (uuid "c4a02acb-617b-4729-a469-3fe8816332aa"))(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "SW1") (unit 1)))))
+ (pin "1" (uuid "226c58ef-8e57-4f7b-8e26-7244461f698a"))(pin "2" (uuid "c4a02acb-617b-4729-a469-3fe8816332aa"))(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "SW1") (unit 1)))))
 (wire (pts (xy 220.9800 111.7600) (xy 231.1400 111.7600)) (stroke (width 0) (type default)) (uuid "b0ca9af0-33a7-469f-adac-ab6a6d484e90"))
 (wire (pts (xy 241.3000 111.7600) (xy 246.3800 111.7600)) (stroke (width 0) (type default)) (uuid "7451091b-aab0-4633-afd3-a81744cf2d6c"))
 (wire (pts (xy 246.3800 111.7600) (xy 246.3800 127.0000)) (stroke (width 0) (type default)) (uuid "cc39de73-0059-4089-bff6-cd0d8f69b3b3"))
 (global_label "GND" (shape input) (at 246.38 127.0 180) (effects (font (size 1 1)) (justify right)) (uuid "3987760e-1ff3-42cc-a93b-9f268a83dfed"))
 (symbol (lib_id "Device:C") (at 165.1000 121.9200 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "cdff43c7-f26c-40a3-b4e4-d3a7a8782b79") (property "Reference" "C5" (at 170.1000 119.9200 0)  (effects (font (size 1 1))))
 (property "Value" "1uF / 10V X7R" (at 177.1000 123.9200 0)  (effects (font (size 1 1))))
-(property "Footprint" "Capacitor_SMD:C_0805_2012Metric" (at 165.1000 121.9200 0) (hide yes) (effects (font (size 1 1))))
- (pin "1" (uuid "80c9c921-bb13-484d-86b3-18cfd3bdde41"))(pin "2" (uuid "6be86311-6eb8-49db-8444-40b5e8f2c2ff"))(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "C5") (unit 1)))))
+(property "Footprint" "Capacitor_SMD:C_1206_3216Metric" (at 165.1000 121.9200 0) (hide yes) (effects (font (size 1 1))))
+ (pin "1" (uuid "80c9c921-bb13-484d-86b3-18cfd3bdde41"))(pin "2" (uuid "6be86311-6eb8-49db-8444-40b5e8f2c2ff"))(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "C5") (unit 1)))))
 (wire (pts (xy 165.1000 111.7600) (xy 165.1000 118.1100)) (stroke (width 0) (type default)) (uuid "278b345b-8b8a-4b76-a8c1-216a5eac46ab"))
 (wire (pts (xy 165.1000 125.7300) (xy 165.1000 130.8100)) (stroke (width 0) (type default)) (uuid "41aa7f0d-3b37-4e01-9fa1-1c2c83124a20"))
 (global_label "GND" (shape input) (at 165.1 130.81 180) (effects (font (size 1 1)) (justify right)) (uuid "0cfbb88d-7c40-4918-9ca3-3243bc6063a2"))
@@ -3921,7 +3922,7 @@
 (symbol (lib_id "Connector_Generic:Conn_01x04") (at 73.6600 167.6400 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "6283be5b-f115-5f47-b571-fb9150bf24ac") (property "Reference" "J1" (at 83.6600 164.6400 0)  (effects (font (size 1 1))))
 (property "Value" "UART 3V3" (at 83.6600 167.6400 0)  (effects (font (size 1 1))))
 (property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical" (at 83.6600 167.6400 0) (hide yes) (effects (font (size 1 1))))
- (pin "1" (uuid "39936083-90d0-4636-954b-5f6f100d8828"))(pin "2" (uuid "064f2ee6-f001-4ae7-8c2b-bad791ea1c80"))(pin "3" (uuid "390bc8ae-f774-4c6a-8434-b28df8d117cb"))(pin "4" (uuid "928297ca-c663-4b5f-87fb-82f2f7cb875d"))(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "J1") (unit 1)))))
+ (pin "1" (uuid "39936083-90d0-4636-954b-5f6f100d8828"))(pin "2" (uuid "064f2ee6-f001-4ae7-8c2b-bad791ea1c80"))(pin "3" (uuid "390bc8ae-f774-4c6a-8434-b28df8d117cb"))(pin "4" (uuid "928297ca-c663-4b5f-87fb-82f2f7cb875d"))(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "J1") (unit 1)))))
 (wire (pts (xy 68.5800 165.1000) (xy 55.8800 165.1000)) (stroke (width 0) (type default)) (uuid "a1f10193-ba1c-4fcf-8872-59d3f4a25cef"))
 (global_label "GND" (shape input) (at 55.88 165.1 180) (effects (font (size 1 1)) (justify right)) (uuid "dcf6363f-edc6-4bcf-84c1-684a2456c1ae"))
 (wire (pts (xy 68.5800 167.6400) (xy 55.8800 167.6400)) (stroke (width 0) (type default)) (uuid "47e5737d-26c3-405b-a9f3-199113362488"))
@@ -3946,14 +3947,14 @@
 (text "EN: R1 10k + C5 1µF.\nRESET zwiera EN do GND." (at 155 132 0) (effects (font (size 1 1)) (justify left top)) (uuid "6874d8bb-731c-4adb-afee-4dbd5d80241b"))
 (text "BOOT zwiera GPIO0 do GND.\nR2 10k ustala normalny start." (at 212 132 0) (effects (font (size 1 1)) (justify left top)) (uuid "315332ac-7a42-4bc5-987d-30799f7956c3"))
 (text "1 GND | 2 +3V3 | 3 RX ESP32 | 4 TX ESP32\nAdapter: TX → RX, RX → TX; logika 3,3 V.\nProgramowanie: trzymaj BOOT, naciśnij i puść RESET, puść BOOT.\nPrzy zasilaniu płytki z 5 V nie podłączaj zasilania 3,3 V adaptera." (at 25 180 0) (effects (font (size 1 1)) (justify left top)) (uuid "f208de49-8136-4f82-956d-996111ec04d6"))
-(text "REKUPERATOR — KONTROLER ESP32" (at 20 20 0) (effects (font (size 2 2) (bold yes)) (justify left top)) (uuid "bcd7af78-e741-45e5-ae1f-0710c69097e5"))
+(text "OpenReku — KONTROLER ESP32" (at 20 20 0) (effects (font (size 2 2) (bold yes)) (justify left top)) (uuid "bcd7af78-e741-45e5-ae1f-0710c69097e5"))
 (text "Baza sterownika: zasilanie, start i programowanie\nPrzerywane ramki oznaczają bloki funkcjonalne; połączenia przez etykiety sieci." (at 20 28 0) (effects (font (size 1.2 1.2)) (justify left top)) (uuid "d7938549-ef6c-4f83-8337-acc753fab14c"))
 
 (rectangle (start 280 20) (end 407 120) (stroke (width .254) (type dash)) (fill (type none)) (uuid "5a9b9750-7840-4581-843e-33ded077c63e"))
 (text "05  WENTYLATOR 1 — WYLOT" (at 283 23 0) (effects (font (size 1.6 1.6) (bold yes)) (justify left top)) (uuid "24d43e7a-61c4-447d-a1d5-87c37dc652d3"))
-(symbol (lib_id "Transistor_BJT:2N3904") (at 330.2 66.04 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "608ee791-efdc-4777-9125-ba05ba0b1b28") (property "Reference" "Q1" (at 340.2 64.34 0)  (effects (font (size 1 1))))(property "Value" "2N3904" (at 340.2 67.74000000000001 0)  (effects (font (size 1 1))))(property "Footprint" "Package_TO_SOT_THT:TO-92_Inline" (at 340.2 67.74000000000001 0) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "d96f2d24-2423-4d06-b411-ea09eadd8ef6"))(pin "2" (uuid "9848d967-a175-47f7-8d98-d87e097ec64e"))(pin "3" (uuid "d061e315-68e5-4298-9279-19e38133a27e"))(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "Q1") (unit 1)))))
-(symbol (lib_id "Device:R") (at 312.42 66.04 90) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "52e5db98-3c6b-4375-b658-2356bd8b3582") (property "Reference" "R3" (at 312.42 60.040000000000006 90)  (effects (font (size 1 1))))(property "Value" "2.2k" (at 312.42 63.040000000000006 90)  (effects (font (size 1 1))))(property "Footprint" "Resistor_SMD:R_0603_1608Metric" (at 312.42 63.040000000000006 90) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "69de36d7-9292-41c5-af8f-9673c624b342"))(pin "2" (uuid "6a976800-0fd8-4f29-bd5b-8a512eac4022"))(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "R3") (unit 1)))))
-(symbol (lib_id "Device:R") (at 332.74 45.72 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "956b6fa2-1a99-4a74-a0b1-2f8045177736") (property "Reference" "R4" (at 337.74 44.019999999999996 0)  (effects (font (size 1 1))))(property "Value" "10k" (at 337.74 47.42 0)  (effects (font (size 1 1))))(property "Footprint" "Resistor_SMD:R_0603_1608Metric" (at 337.74 47.42 0) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "f2085818-ce49-4096-be28-e3929811acae"))(pin "2" (uuid "ed0dd5a1-1a94-47bd-9c4e-d3fc1da1f670"))(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "R4") (unit 1)))))
+(symbol (lib_id "Transistor_BJT:2N3904") (at 330.2 66.04 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "608ee791-efdc-4777-9125-ba05ba0b1b28") (property "Reference" "Q1" (at 340.2 64.34 0)  (effects (font (size 1 1))))(property "Value" "2N3904" (at 340.2 67.74000000000001 0)  (effects (font (size 1 1))))(property "Footprint" "Package_TO_SOT_THT:TO-92_Inline" (at 340.2 67.74000000000001 0) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "d96f2d24-2423-4d06-b411-ea09eadd8ef6"))(pin "2" (uuid "9848d967-a175-47f7-8d98-d87e097ec64e"))(pin "3" (uuid "d061e315-68e5-4298-9279-19e38133a27e"))(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "Q1") (unit 1)))))
+(symbol (lib_id "Device:R") (at 312.42 66.04 90) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "52e5db98-3c6b-4375-b658-2356bd8b3582") (property "Reference" "R3" (at 312.42 60.040000000000006 90)  (effects (font (size 1 1))))(property "Value" "2.2k" (at 312.42 63.040000000000006 90)  (effects (font (size 1 1))))(property "Footprint" "Resistor_SMD:R_1206_3216Metric" (at 312.42 63.040000000000006 90) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "69de36d7-9292-41c5-af8f-9673c624b342"))(pin "2" (uuid "6a976800-0fd8-4f29-bd5b-8a512eac4022"))(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "R3") (unit 1)))))
+(symbol (lib_id "Device:R") (at 332.74 45.72 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "956b6fa2-1a99-4a74-a0b1-2f8045177736") (property "Reference" "R4" (at 337.74 44.019999999999996 0)  (effects (font (size 1 1))))(property "Value" "10k" (at 337.74 47.42 0)  (effects (font (size 1 1))))(property "Footprint" "Resistor_SMD:R_1206_3216Metric" (at 337.74 47.42 0) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "f2085818-ce49-4096-be28-e3929811acae"))(pin "2" (uuid "ed0dd5a1-1a94-47bd-9c4e-d3fc1da1f670"))(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "R4") (unit 1)))))
 (wire (pts (xy 299.7200 66.0400) (xy 308.6100 66.0400)) (stroke (width 0) (type default)) (uuid "65fd9f24-c601-4d78-94fb-fcc2adffe9c4"))
 (label "FAN1_PWM" (at 289.5600 66.0400 0) (effects (font (size 1 1)) (justify left bottom)) (uuid "6c29b367-a535-453e-aca0-0411a459fa1f"))
 (wire (pts (xy 289.5600 66.0400) (xy 299.7200 66.0400)) (stroke (width 0) (type default)) (uuid "db804c2d-0e6a-4e5b-91d0-b13095c57e10"))
@@ -3967,7 +3968,7 @@
 (junction (at 332.74 55.8800) (diameter 0) (color 0 0 0 0) (uuid "b6d863fa-7899-4768-b445-2e72dd511376"))
 (wire (pts (xy 332.7400 71.1200) (xy 332.7400 78.7400)) (stroke (width 0) (type default)) (uuid "d5136374-6a6d-4ef4-b79f-48d09bbc4724"))
 (global_label "GND" (shape input) (at 332.7400 78.7400 180) (effects (font (size 1 1)) (justify right)) (uuid "27347fc1-4697-4e99-8073-67f53764cc61"))
-(symbol (lib_id "Connector_Generic:Conn_01x04") (at 383.54 45.72 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "4dba8954-666a-4cdc-983d-4f50242c84cb") (property "Reference" "J2" (at 390.54 40.72 0)  (effects (font (size 1 1))))(property "Value" "FAN1 WYLOT" (at 390.54 43.72 0)  (effects (font (size 1 1))))(property "Footprint" "Rekuperator:KLS2-EDV-5.08-04P-4_Vertical" (at 390.54 43.72 0) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "8dc21995-356d-4345-9c43-f81464e207b0"))(pin "2" (uuid "018bab5c-965c-4f69-ad66-7dde913422a0"))(pin "3" (uuid "2f88b8e7-5de0-4839-9776-cefad5747628"))(pin "4" (uuid "9cdc1a75-4403-41ef-804d-989770310bac"))(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "J2") (unit 1))))(property "MPN" "KLS2-EDV-5.08-04P-4" (at 0 0 0) (hide yes) (effects (font (size 1 1))))
+(symbol (lib_id "Connector_Generic:Conn_01x04") (at 383.54 45.72 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "4dba8954-666a-4cdc-983d-4f50242c84cb") (property "Reference" "J2" (at 390.54 40.72 0)  (effects (font (size 1 1))))(property "Value" "FAN1 WYLOT" (at 390.54 43.72 0)  (effects (font (size 1 1))))(property "Footprint" "Rekuperator:KLS2-EDV-5.08-04P-4_Vertical" (at 390.54 43.72 0) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "8dc21995-356d-4345-9c43-f81464e207b0"))(pin "2" (uuid "018bab5c-965c-4f69-ad66-7dde913422a0"))(pin "3" (uuid "2f88b8e7-5de0-4839-9776-cefad5747628"))(pin "4" (uuid "9cdc1a75-4403-41ef-804d-989770310bac"))(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "J2") (unit 1))))(property "MPN" "KLS2-EDV-5.08-04P-4" (at 0 0 0) (hide yes) (effects (font (size 1 1))))
 (property "MatingConnector" "KLS2-EDK-5.08-04P-4S" (at 0 0 0) (hide yes) (effects (font (size 1 1))))
 (property "Datasheet" "https://img.klsele.com/admin/product_upload/20250331141523L-KLS2-EDV-5.00%265.08.pdf" (at 0 0 0) (hide yes) (effects (font (size 1 1))))
 )
@@ -3985,9 +3986,9 @@
 (text "Stop zależy od stanu GPIO i zasilania wentylatora.\nPrzy wyłączonym tranzystorze CTRL jest podciągnięty do +10V." (at 283 109 0) (effects (font (size 1 1) ) (justify left top)) (uuid "2b257dae-1b41-4ad9-a5f8-41f23efeac5f"))
 (rectangle (start 280 126.68) (end 407 226.68) (stroke (width .254) (type dash)) (fill (type none)) (uuid "fc566d5a-c72f-4ea5-92e7-43a836dc12c6"))
 (text "06  WENTYLATOR 2 — WLOT" (at 283 129.68 0) (effects (font (size 1.6 1.6) (bold yes)) (justify left top)) (uuid "67fc39d8-b852-4f55-97ca-bcbe1e5b0528"))
-(symbol (lib_id "Transistor_BJT:2N3904") (at 330.2 172.72000000000003 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "e434c2a5-fdf1-42af-b51f-7356ddc9f311") (property "Reference" "Q2" (at 340.2 171.02000000000004 0)  (effects (font (size 1 1))))(property "Value" "2N3904" (at 340.2 174.42000000000002 0)  (effects (font (size 1 1))))(property "Footprint" "Package_TO_SOT_THT:TO-92_Inline" (at 340.2 174.42000000000002 0) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "fcc5a41a-6642-4b14-834d-76ca749aa9ec"))(pin "2" (uuid "04d92a80-704e-4b2a-a2e5-5160b9950476"))(pin "3" (uuid "e37ecb0a-e648-4831-96d6-3007bec15b67"))(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "Q2") (unit 1)))))
-(symbol (lib_id "Device:R") (at 312.42 172.72000000000003 90) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "37d6d524-57c3-4435-a724-7498d0102135") (property "Reference" "R5" (at 312.42 166.72000000000003 90)  (effects (font (size 1 1))))(property "Value" "2.2k" (at 312.42 169.72000000000003 90)  (effects (font (size 1 1))))(property "Footprint" "Resistor_SMD:R_0603_1608Metric" (at 312.42 169.72000000000003 90) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "5b6d6b73-b223-42e0-8bb9-7486325a05ed"))(pin "2" (uuid "6728eee3-7a4c-4f60-b33f-433c904a4005"))(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "R5") (unit 1)))))
-(symbol (lib_id "Device:R") (at 332.74 152.4 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "fc2dd95c-9c10-46a7-943c-cfb3e5d2d787") (property "Reference" "R6" (at 337.74 150.70000000000002 0)  (effects (font (size 1 1))))(property "Value" "10k" (at 337.74 154.1 0)  (effects (font (size 1 1))))(property "Footprint" "Resistor_SMD:R_0603_1608Metric" (at 337.74 154.1 0) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "0aaaa616-af18-4cf0-941a-315a021b9238"))(pin "2" (uuid "03a30ccf-40aa-44e0-bd3c-8e798f1850d8"))(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "R6") (unit 1)))))
+(symbol (lib_id "Transistor_BJT:2N3904") (at 330.2 172.72000000000003 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "e434c2a5-fdf1-42af-b51f-7356ddc9f311") (property "Reference" "Q2" (at 340.2 171.02000000000004 0)  (effects (font (size 1 1))))(property "Value" "2N3904" (at 340.2 174.42000000000002 0)  (effects (font (size 1 1))))(property "Footprint" "Package_TO_SOT_THT:TO-92_Inline" (at 340.2 174.42000000000002 0) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "fcc5a41a-6642-4b14-834d-76ca749aa9ec"))(pin "2" (uuid "04d92a80-704e-4b2a-a2e5-5160b9950476"))(pin "3" (uuid "e37ecb0a-e648-4831-96d6-3007bec15b67"))(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "Q2") (unit 1)))))
+(symbol (lib_id "Device:R") (at 312.42 172.72000000000003 90) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "37d6d524-57c3-4435-a724-7498d0102135") (property "Reference" "R5" (at 312.42 166.72000000000003 90)  (effects (font (size 1 1))))(property "Value" "2.2k" (at 312.42 169.72000000000003 90)  (effects (font (size 1 1))))(property "Footprint" "Resistor_SMD:R_1206_3216Metric" (at 312.42 169.72000000000003 90) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "5b6d6b73-b223-42e0-8bb9-7486325a05ed"))(pin "2" (uuid "6728eee3-7a4c-4f60-b33f-433c904a4005"))(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "R5") (unit 1)))))
+(symbol (lib_id "Device:R") (at 332.74 152.4 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "fc2dd95c-9c10-46a7-943c-cfb3e5d2d787") (property "Reference" "R6" (at 337.74 150.70000000000002 0)  (effects (font (size 1 1))))(property "Value" "10k" (at 337.74 154.1 0)  (effects (font (size 1 1))))(property "Footprint" "Resistor_SMD:R_1206_3216Metric" (at 337.74 154.1 0) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "0aaaa616-af18-4cf0-941a-315a021b9238"))(pin "2" (uuid "03a30ccf-40aa-44e0-bd3c-8e798f1850d8"))(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "R6") (unit 1)))))
 (wire (pts (xy 299.7200 172.7200) (xy 308.6100 172.7200)) (stroke (width 0) (type default)) (uuid "d884d3c1-6194-46b1-8222-49ef532022c4"))
 (label "FAN2_PWM" (at 289.5600 172.7200 0) (effects (font (size 1 1)) (justify left bottom)) (uuid "7a10e91e-c48e-4e9b-92f4-d995c7e4991f"))
 (wire (pts (xy 289.5600 172.7200) (xy 299.7200 172.7200)) (stroke (width 0) (type default)) (uuid "30d13d1b-9137-4301-a55d-6d4baee12160"))
@@ -4001,7 +4002,7 @@
 (junction (at 332.74 162.5600) (diameter 0) (color 0 0 0 0) (uuid "0a9c33d9-d336-4d69-8f8f-2ec8cf33d9a5"))
 (wire (pts (xy 332.7400 177.8000) (xy 332.7400 185.4200)) (stroke (width 0) (type default)) (uuid "adf8f5c2-f027-4a52-ba83-81ae6c93d74d"))
 (global_label "GND" (shape input) (at 332.7400 185.4200 180) (effects (font (size 1 1)) (justify right)) (uuid "95cbf6d4-8043-41a8-b3e1-da5ef9b44516"))
-(symbol (lib_id "Connector_Generic:Conn_01x04") (at 383.54 152.4 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "0fdf3ea8-5d6f-41bd-abb5-9a7de74574ff") (property "Reference" "J3" (at 390.54 147.4 0)  (effects (font (size 1 1))))(property "Value" "FAN2 WLOT" (at 390.54 150.4 0)  (effects (font (size 1 1))))(property "Footprint" "Rekuperator:KLS2-EDV-5.08-04P-4_Vertical" (at 390.54 150.4 0) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "dcafca23-748e-4efb-8048-d71d88228591"))(pin "2" (uuid "96e98308-593f-4bb2-a406-e56ad954d269"))(pin "3" (uuid "b494d48c-664d-4fc4-93f7-33ffe139158f"))(pin "4" (uuid "ee83e1e7-0f7a-44c6-aabe-ee1d2b63f423"))(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "J3") (unit 1))))(property "MPN" "KLS2-EDV-5.08-04P-4" (at 0 0 0) (hide yes) (effects (font (size 1 1))))
+(symbol (lib_id "Connector_Generic:Conn_01x04") (at 383.54 152.4 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "0fdf3ea8-5d6f-41bd-abb5-9a7de74574ff") (property "Reference" "J3" (at 390.54 147.4 0)  (effects (font (size 1 1))))(property "Value" "FAN2 WLOT" (at 390.54 150.4 0)  (effects (font (size 1 1))))(property "Footprint" "Rekuperator:KLS2-EDV-5.08-04P-4_Vertical" (at 390.54 150.4 0) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "dcafca23-748e-4efb-8048-d71d88228591"))(pin "2" (uuid "96e98308-593f-4bb2-a406-e56ad954d269"))(pin "3" (uuid "b494d48c-664d-4fc4-93f7-33ffe139158f"))(pin "4" (uuid "ee83e1e7-0f7a-44c6-aabe-ee1d2b63f423"))(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "J3") (unit 1))))(property "MPN" "KLS2-EDV-5.08-04P-4" (at 0 0 0) (hide yes) (effects (font (size 1 1))))
 (property "MatingConnector" "KLS2-EDK-5.08-04P-4S" (at 0 0 0) (hide yes) (effects (font (size 1 1))))
 (property "Datasheet" "https://img.klsele.com/admin/product_upload/20250331141523L-KLS2-EDV-5.00%265.08.pdf" (at 0 0 0) (hide yes) (effects (font (size 1 1))))
 )
@@ -4021,11 +4022,11 @@
 
 (rectangle (start 150 145) (end 270 200) (stroke (width .254) (type dash)) (fill (type none)) (uuid "90dc79c2-33a7-480f-9073-1f88d3342f0e"))
 (text "07  TACHOMETR — WYLOT" (at 153 148 0) (effects (font (size 1.6 1.6) (bold yes)) (justify left top)) (uuid "9b54d951-8968-469a-846a-dd88b85293b3"))
-(symbol (lib_id "Isolator:PC817") (at 220.98 172.72 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "72aad4bf-2495-409f-8534-d7ec2a1e845a") (property "Reference" "U3" (at 220.98 164.72 0)  (effects (font (size 1 1))))(property "Value" "PC817" (at 220.98 167.72 0)  (effects (font (size 1 1))))(property "Footprint" "Package_DIP:DIP-4_W7.62mm" (at 220.98 167.72 0) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "b5332119-5b10-4c2a-8efb-e1b65fb288b5"))(pin "2" (uuid "c1ee270e-f1ee-4246-816a-eac9fb85f7ac"))(pin "3" (uuid "3c2d38ba-cdcd-4c3b-a178-091198dde7c3"))(pin "4" (uuid "cd292ba3-3f2d-4d37-9eee-4d984ec1eeef"))(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "U3") (unit 1)))))
-(symbol (lib_id "Device:R") (at 195.58 170.18 90) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "b65f362f-8d18-41bf-8cea-fba6adca7df6") (property "Reference" "R7" (at 195.58 164.18 90)  (effects (font (size 1 1))))(property "Value" "1.8k" (at 195.58 167.18 90)  (effects (font (size 1 1))))(property "Footprint" "Resistor_SMD:R_0603_1608Metric" (at 195.58 167.18 90) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "2394c826-484d-4683-b210-c04ea77b75ad"))(pin "2" (uuid "36c5889a-557d-4f50-911e-9f42012e2403"))(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "R7") (unit 1)))))
-(symbol (lib_id "Device:R") (at 190.5 187.96 90) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "1d1f313d-c14e-466e-8737-5e83931fb61a") (property "Reference" "R8" (at 190.5 181.96 90)  (effects (font (size 1 1))))(property "Value" "4.7k" (at 190.5 184.96 90)  (effects (font (size 1 1))))(property "Footprint" "Resistor_SMD:R_0603_1608Metric" (at 190.5 184.96 90) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "14542453-17e8-4131-8594-c9494658f7ce"))(pin "2" (uuid "c9e74e5e-3e7f-4ae3-b57e-998f9c6d265d"))(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "R8") (unit 1)))))
-(symbol (lib_id "Device:LED") (at 207.01 187.96 180) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "32226af4-39da-42d4-a3a5-a9ed800e1d42") (property "Reference" "D1" (at 207.01 181.96 0)  (effects (font (size 1 1))))(property "Value" "LED RPM" (at 207.01 184.96 0)  (effects (font (size 1 1))))(property "Footprint" "LED_THT:LED_D3.0mm" (at 207.01 184.96 0) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "6165438e-b3bf-4dbb-93f4-3adfd3eb38eb"))(pin "2" (uuid "6d6ed4c8-2110-40d9-b391-c1f10ce7bb51"))(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "D1") (unit 1)))))
-(symbol (lib_id "Device:R") (at 241.3 161.29 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "49f70750-b36c-48d6-bc0a-b6c170482c3d") (property "Reference" "R9" (at 246.3 159.59 0)  (effects (font (size 1 1))))(property "Value" "4.7k" (at 246.3 162.98999999999998 0)  (effects (font (size 1 1))))(property "Footprint" "Resistor_SMD:R_0603_1608Metric" (at 246.3 162.98999999999998 0) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "6f1263c8-3029-43d5-b0b1-1318185695a5"))(pin "2" (uuid "5a7f5c88-0873-4367-ac48-2af2377e6f4c"))(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "R9") (unit 1)))))
+(symbol (lib_id "Isolator:PC817") (at 220.98 172.72 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "72aad4bf-2495-409f-8534-d7ec2a1e845a") (property "Reference" "U3" (at 220.98 164.72 0)  (effects (font (size 1 1))))(property "Value" "PC817" (at 220.98 167.72 0)  (effects (font (size 1 1))))(property "Footprint" "Package_DIP:DIP-4_W7.62mm" (at 220.98 167.72 0) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "b5332119-5b10-4c2a-8efb-e1b65fb288b5"))(pin "2" (uuid "c1ee270e-f1ee-4246-816a-eac9fb85f7ac"))(pin "3" (uuid "3c2d38ba-cdcd-4c3b-a178-091198dde7c3"))(pin "4" (uuid "cd292ba3-3f2d-4d37-9eee-4d984ec1eeef"))(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "U3") (unit 1)))))
+(symbol (lib_id "Device:R") (at 195.58 170.18 90) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "b65f362f-8d18-41bf-8cea-fba6adca7df6") (property "Reference" "R7" (at 195.58 164.18 90)  (effects (font (size 1 1))))(property "Value" "1.8k" (at 195.58 167.18 90)  (effects (font (size 1 1))))(property "Footprint" "Resistor_SMD:R_1206_3216Metric" (at 195.58 167.18 90) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "2394c826-484d-4683-b210-c04ea77b75ad"))(pin "2" (uuid "36c5889a-557d-4f50-911e-9f42012e2403"))(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "R7") (unit 1)))))
+(symbol (lib_id "Device:R") (at 190.5 187.96 90) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "1d1f313d-c14e-466e-8737-5e83931fb61a") (property "Reference" "R8" (at 190.5 181.96 90)  (effects (font (size 1 1))))(property "Value" "4.7k" (at 190.5 184.96 90)  (effects (font (size 1 1))))(property "Footprint" "Resistor_SMD:R_1206_3216Metric" (at 190.5 184.96 90) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "14542453-17e8-4131-8594-c9494658f7ce"))(pin "2" (uuid "c9e74e5e-3e7f-4ae3-b57e-998f9c6d265d"))(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "R8") (unit 1)))))
+(symbol (lib_id "Device:LED") (at 207.01 187.96 180) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "32226af4-39da-42d4-a3a5-a9ed800e1d42") (property "Reference" "D1" (at 207.01 181.96 0)  (effects (font (size 1 1))))(property "Value" "LED RPM" (at 207.01 184.96 0)  (effects (font (size 1 1))))(property "Footprint" "LED_THT:LED_D3.0mm" (at 207.01 184.96 0) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "6165438e-b3bf-4dbb-93f4-3adfd3eb38eb"))(pin "2" (uuid "6d6ed4c8-2110-40d9-b391-c1f10ce7bb51"))(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "D1") (unit 1)))))
+(symbol (lib_id "Device:R") (at 241.3 161.29 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "49f70750-b36c-48d6-bc0a-b6c170482c3d") (property "Reference" "R9" (at 246.3 159.59 0)  (effects (font (size 1 1))))(property "Value" "4.7k" (at 246.3 162.98999999999998 0)  (effects (font (size 1 1))))(property "Footprint" "Resistor_SMD:R_1206_3216Metric" (at 246.3 162.98999999999998 0) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "6f1263c8-3029-43d5-b0b1-1318185695a5"))(pin "2" (uuid "5a7f5c88-0873-4367-ac48-2af2377e6f4c"))(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "R9") (unit 1)))))
 (label "FAN1_10V" (at 163.8300 165.1000 0) (effects (font (size 1 1)) (justify left bottom)) (uuid "67cd909e-7f8e-46f1-b23d-dc7d97578076"))
 (wire (pts (xy 163.8300 165.1000) (xy 177.8000 165.1000)) (stroke (width 0) (type default)) (uuid "90a1de08-8b06-487d-aa51-fa238ab43a14"))
 (wire (pts (xy 177.8000 165.1000) (xy 177.8000 170.1800)) (stroke (width 0) (type default)) (uuid "ee376caf-f5e2-41f2-b8c8-c58ef9d5ff00"))
@@ -4054,11 +4055,11 @@
 (text "TACH zwarty do masy → LED świeci → RPM = 0 V.\nPC817: 1 anoda / 2 katoda / 3 emiter / 4 kolektor." (at 153 193 0) (effects (font (size 1 1) ) (justify left top)) (uuid "858157c5-afa7-4208-8f02-5f20f977f082"))
 (rectangle (start 150 203.42000000000002) (end 270 258.42) (stroke (width .254) (type dash)) (fill (type none)) (uuid "c9a8ab8d-cc25-4777-b738-5efa79fde0f9"))
 (text "08  TACHOMETR — WLOT" (at 153 206.42000000000002 0) (effects (font (size 1.6 1.6) (bold yes)) (justify left top)) (uuid "7343959c-8034-4497-82c6-942783dd1aa9"))
-(symbol (lib_id "Isolator:PC817") (at 220.98 231.14 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "54528fd8-f542-4a91-a754-24ad00bed2af") (property "Reference" "U4" (at 220.98 223.14 0)  (effects (font (size 1 1))))(property "Value" "PC817" (at 220.98 226.14 0)  (effects (font (size 1 1))))(property "Footprint" "Package_DIP:DIP-4_W7.62mm" (at 220.98 226.14 0) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "ecf22a19-128d-4681-9a2e-07ead1045d27"))(pin "2" (uuid "781ded7e-1107-4b94-b8d3-9d5bf68edd03"))(pin "3" (uuid "ee594f06-6cb1-4f29-b1ab-ada895f3151c"))(pin "4" (uuid "05e47627-4eb2-49bd-b786-42fb4c9ce303"))(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "U4") (unit 1)))))
-(symbol (lib_id "Device:R") (at 195.58 228.60000000000002 90) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "eb4af4fe-fda7-4b5e-808e-007809b20d00") (property "Reference" "R10" (at 195.58 222.60000000000002 90)  (effects (font (size 1 1))))(property "Value" "1.8k" (at 195.58 225.60000000000002 90)  (effects (font (size 1 1))))(property "Footprint" "Resistor_SMD:R_0603_1608Metric" (at 195.58 225.60000000000002 90) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "baccfe55-814d-4054-b78d-dabaa30af734"))(pin "2" (uuid "cf936fbd-df5a-46ba-b597-eb20281a2b89"))(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "R10") (unit 1)))))
-(symbol (lib_id "Device:R") (at 190.5 246.38 90) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "fb13515e-573b-4b7b-80b0-e402bd1594d8") (property "Reference" "R11" (at 190.5 240.38 90)  (effects (font (size 1 1))))(property "Value" "4.7k" (at 190.5 243.38 90)  (effects (font (size 1 1))))(property "Footprint" "Resistor_SMD:R_0603_1608Metric" (at 190.5 243.38 90) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "d51a9438-5040-40d9-8b7f-8168b88c5cb9"))(pin "2" (uuid "9383cd55-b2da-4c09-8a53-09bfb6569345"))(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "R11") (unit 1)))))
-(symbol (lib_id "Device:LED") (at 207.01 246.38 180) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "77636391-36f7-49b1-909d-16800537cd4a") (property "Reference" "D2" (at 207.01 240.38 0)  (effects (font (size 1 1))))(property "Value" "LED RPM" (at 207.01 243.38 0)  (effects (font (size 1 1))))(property "Footprint" "LED_THT:LED_D3.0mm" (at 207.01 243.38 0) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "34c0f578-dc97-4acf-ba72-dcac783c724a"))(pin "2" (uuid "3e017489-23bb-4dd7-a078-bac5707934b5"))(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "D2") (unit 1)))))
-(symbol (lib_id "Device:R") (at 241.3 219.70999999999998 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "cd39fb33-9134-4936-8e04-d918ffb30c1c") (property "Reference" "R12" (at 246.3 218.01 0)  (effects (font (size 1 1))))(property "Value" "4.7k" (at 246.3 221.40999999999997 0)  (effects (font (size 1 1))))(property "Footprint" "Resistor_SMD:R_0603_1608Metric" (at 246.3 221.40999999999997 0) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "e8bb990e-474c-47e9-923b-7bdb70c5865c"))(pin "2" (uuid "f32edd42-c213-4a20-8ad1-086becbea245"))(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "R12") (unit 1)))))
+(symbol (lib_id "Isolator:PC817") (at 220.98 231.14 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "54528fd8-f542-4a91-a754-24ad00bed2af") (property "Reference" "U4" (at 220.98 223.14 0)  (effects (font (size 1 1))))(property "Value" "PC817" (at 220.98 226.14 0)  (effects (font (size 1 1))))(property "Footprint" "Package_DIP:DIP-4_W7.62mm" (at 220.98 226.14 0) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "ecf22a19-128d-4681-9a2e-07ead1045d27"))(pin "2" (uuid "781ded7e-1107-4b94-b8d3-9d5bf68edd03"))(pin "3" (uuid "ee594f06-6cb1-4f29-b1ab-ada895f3151c"))(pin "4" (uuid "05e47627-4eb2-49bd-b786-42fb4c9ce303"))(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "U4") (unit 1)))))
+(symbol (lib_id "Device:R") (at 195.58 228.60000000000002 90) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "eb4af4fe-fda7-4b5e-808e-007809b20d00") (property "Reference" "R10" (at 195.58 222.60000000000002 90)  (effects (font (size 1 1))))(property "Value" "1.8k" (at 195.58 225.60000000000002 90)  (effects (font (size 1 1))))(property "Footprint" "Resistor_SMD:R_1206_3216Metric" (at 195.58 225.60000000000002 90) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "baccfe55-814d-4054-b78d-dabaa30af734"))(pin "2" (uuid "cf936fbd-df5a-46ba-b597-eb20281a2b89"))(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "R10") (unit 1)))))
+(symbol (lib_id "Device:R") (at 190.5 246.38 90) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "fb13515e-573b-4b7b-80b0-e402bd1594d8") (property "Reference" "R11" (at 190.5 240.38 90)  (effects (font (size 1 1))))(property "Value" "4.7k" (at 190.5 243.38 90)  (effects (font (size 1 1))))(property "Footprint" "Resistor_SMD:R_1206_3216Metric" (at 190.5 243.38 90) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "d51a9438-5040-40d9-8b7f-8168b88c5cb9"))(pin "2" (uuid "9383cd55-b2da-4c09-8a53-09bfb6569345"))(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "R11") (unit 1)))))
+(symbol (lib_id "Device:LED") (at 207.01 246.38 180) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "77636391-36f7-49b1-909d-16800537cd4a") (property "Reference" "D2" (at 207.01 240.38 0)  (effects (font (size 1 1))))(property "Value" "LED RPM" (at 207.01 243.38 0)  (effects (font (size 1 1))))(property "Footprint" "LED_THT:LED_D3.0mm" (at 207.01 243.38 0) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "34c0f578-dc97-4acf-ba72-dcac783c724a"))(pin "2" (uuid "3e017489-23bb-4dd7-a078-bac5707934b5"))(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "D2") (unit 1)))))
+(symbol (lib_id "Device:R") (at 241.3 219.70999999999998 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "cd39fb33-9134-4936-8e04-d918ffb30c1c") (property "Reference" "R12" (at 246.3 218.01 0)  (effects (font (size 1 1))))(property "Value" "4.7k" (at 246.3 221.40999999999997 0)  (effects (font (size 1 1))))(property "Footprint" "Resistor_SMD:R_1206_3216Metric" (at 246.3 221.40999999999997 0) (hide yes) (effects (font (size 1 1)))) (pin "1" (uuid "e8bb990e-474c-47e9-923b-7bdb70c5865c"))(pin "2" (uuid "f32edd42-c213-4a20-8ad1-086becbea245"))(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (reference "R12") (unit 1)))))
 (label "FAN2_10V" (at 163.8300 223.5200 0) (effects (font (size 1 1)) (justify left bottom)) (uuid "3a40b1ea-0d03-4a07-9021-03cb4a5dc8a2"))
 (wire (pts (xy 163.8300 223.5200) (xy 177.8000 223.5200)) (stroke (width 0) (type default)) (uuid "12303de2-88df-4359-ae7a-87e21611f376"))
 (wire (pts (xy 177.8000 223.5200) (xy 177.8000 228.6000)) (stroke (width 0) (type default)) (uuid "639ce035-8afc-425c-b801-1844540fbbf8"))
@@ -4094,7 +4095,7 @@
 (sheet (at 20.32 260.35) (size 101.6 15.24) (stroke (width .254) (type default)) (fill (color 0 0 0 0)) (uuid "e4f9dde3-597c-4fa6-8756-d417d9a2c8d9")
 (property "Sheetname" "I2C — multiplekser i czujniki" (at 20.32 259.59 0) (effects (font (size 1.27 1.27)) (justify left bottom)))
 (property "Sheetfile" "I2C.kicad_sch" (at 20.32 276.35 0) (effects (font (size 1.27 1.27)) (justify left top)))
-(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (page "2")))))
+(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (page "2")))))
 (text "TCA9548A • 0x70 • 8 × I²C / 3,3 V" (at 24 265 0) (effects (font (size 1.5 1.5) ) (justify left top)) (uuid "91324463-0698-4f8c-9878-c718fa88c78d"))
 
 (wire (pts (xy 115.2400 94.9200) (xy 125.7300 94.9200)) (stroke (width 0) (type default)) (uuid "9e2bb96f-4cdf-4190-9dd1-6675c8f82f8e"))
@@ -4110,7 +4111,7 @@
 (sheet (at 152.4 265.43) (size 111.76 12.7) (stroke (width .254) (type default)) (fill (color 0 0 0 0)) (uuid "19021795-d8bb-438e-9745-8825f78a0c9c")
 (property "Sheetname" "230V" (at 152.4 264.67 0) (effects (font (size 1.27 1.27)) (justify left bottom)))
 (property "Sheetfile" "230V.kicad_sch" (at 152.4 278.89 0) (effects (font (size 1.27 1.27)) (justify left top)))
-(instances (project "Rekuperator" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (page "3")))))
+(instances (project "OpenReku" (path "/b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5" (page "3")))))
 (text "230 V AC — K1 + cztery SSR" (at 156.21 269.24 0) (effects (font (size 1.5 1.5) ) (justify left top)) (uuid "30d1b38e-72fd-46c2-aa90-01bba981da6b"))
 (no_connect (at 84.76 102.54) (uuid "34c8052c-7a65-4c61-bde0-cbf05d181e55"))
 (no_connect (at 115.24 117.78) (uuid "d8489c5e-5ddf-4e47-b040-c2b2900482b7"))

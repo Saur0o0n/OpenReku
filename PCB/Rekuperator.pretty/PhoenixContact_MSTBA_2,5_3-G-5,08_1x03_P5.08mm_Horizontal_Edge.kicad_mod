@@ -1,0 +1,163 @@
+(footprint "PhoenixContact_MSTBA_2,5_3-G-5,08_1x03_P5.08mm_Horizontal_Edge"
+	(version 20260206)
+	(generator "kicad-footprint-generator")
+	(layer "F.Cu")
+	(descr "Generic Phoenix Contact connector footprint for: MSTBA_2,5/3-G-5,08; number of pins: 03; pin pitch: 5.08mm; Angled || order number: 1757255 12A || order number: 1923872 16A (HC)")
+	(tags "phoenix_contact connector MSTBA_01x03_G_5.08mm")
+	(property "Reference" "REF**"
+		(at 5.08 -3.2 0)
+		(layer "F.SilkS")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "PhoenixContact_MSTBA_2,5_3-G-5,08_1x03_P5.08mm_Horizontal"
+		(at 5.08 11.2 0)
+		(layer "F.Fab")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "KiLib_Generator" "connector/PhoenixContact"
+		(at 0 0 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(duplicate_pad_numbers_are_jumpers no)
+	
+	
+	(fp_line
+		(start -0.3 -2.91)
+		(end 0.3 -2.91)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+	)
+	(fp_line
+		(start 0 -2.31)
+		(end -0.3 -2.91)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+	)
+	(fp_line
+		(start 0.3 -2.91)
+		(end 0 -2.31)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+	)
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	(fp_line (start -3.65 -2.11) (end 13.81 -2.11) (stroke (width .12) (type default)) (layer "F.SilkS") (uuid "1b0ae53b-a59e-409c-90b7-95789d3ab44a"))(fp_line (start 13.81 -2.11) (end 13.81 7.5) (stroke (width .12) (type default)) (layer "F.SilkS") (uuid "cae570b6-1722-4786-9f73-eca328ba1105"))(fp_line (start -3.65 7.5) (end -3.65 -2.11) (stroke (width .12) (type default)) (layer "F.SilkS") (uuid "1ee29656-8faf-4083-9ddf-2fbfe6482e49"))
+	(fp_line (start -3.65 6.81) (end 13.81 6.81) (stroke (width .12) (type default)) (layer "F.SilkS") (uuid "fce1b585-3457-42c5-9096-3eb58f2860b2"))(fp_line (start 13.81 6.81) (end 13.81 7.5) (stroke (width .12) (type default)) (layer "F.SilkS") (uuid "5f5150b5-0eea-4000-b693-d2e031ed36a8"))(fp_line (start -3.65 7.5) (end -3.65 6.81) (stroke (width .12) (type default)) (layer "F.SilkS") (uuid "1cff9b04-3579-4744-a93c-9e47b38e29f9"))
+	(fp_rect
+		(start -4.04 -2.5)
+		(end 14.21 10.5)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+	)
+	(fp_line
+		(start 0 -0.5)
+		(end -0.95 -2)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+	)
+	(fp_line
+		(start 0.95 -2)
+		(end 0 -0.5)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+	)
+	(fp_rect
+		(start -3.54 -2)
+		(end 13.7 10)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 5.08 -1.3 0)
+		(layer "F.Fab")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" thru_hole roundrect
+		(at 0 0)
+		(size 2.08 3.6)
+		(drill 1.4)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(roundrect_rratio 0.120192)
+	)
+	(pad "2" thru_hole oval
+		(at 5.08 0)
+		(size 2.08 3.6)
+		(drill 1.4)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+	)
+	(pad "3" thru_hole oval
+		(at 10.16 0)
+		(size 2.08 3.6)
+		(drill 1.4)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+	)
+	(embedded_fonts no)
+	(model "${KICAD10_3DMODEL_DIR}/Connector_Phoenix_MSTB.3dshapes/PhoenixContact_MSTBA_2,5_3-G-5,08_1x03_P5.08mm_Horizontal.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)

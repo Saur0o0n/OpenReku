@@ -488,7 +488,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "Rekuperator.kicad_pro",
+    "filename": "OpenReku.kicad_pro",
     "version": 3
   },
   "net_settings": {
@@ -527,8 +527,8 @@
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 1.5,
         "tuning_profile": "",
-        "via_diameter": 0.6,
-        "via_drill": 0.3,
+        "via_diameter": 3.2,
+        "via_drill": 1.2,
         "wire_width": 6
       }
     ],
@@ -552,7 +552,7 @@
     "last_paths": {
       "idf": "",
       "netlist": "",
-      "plot": "",
+      "plot": "/tmp/",
       "specctra_dsn": "",
       "step": "",
       "vrml": ""
@@ -627,12 +627,48 @@
           "label": "Datasheet",
           "name": "Datasheet",
           "show": true
+        },
+        {
+          "group_by": false,
+          "label": "MPN",
+          "name": "MPN",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "MatingConnector",
+          "name": "MatingConnector",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Pinout",
+          "name": "Pinout",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "AssemblyNote",
+          "name": "AssemblyNote",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Description",
+          "name": "Description",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "#",
+          "name": "${ITEM_NUMBER}",
+          "show": false
         }
       ],
       "filter_string": "",
       "group_symbols": true,
       "include_excluded_from_bom": true,
-      "name": "Default Editing",
+      "name": "",
       "sort_asc": true,
       "sort_field": "Reference"
     },
@@ -672,8 +708,8 @@
     "subpart_id_separator": 0,
     "top_level_sheets": [
       {
-        "filename": "Rekuperator.kicad_sch",
-        "name": "Rekuperator",
+        "filename": "OpenReku.kicad_sch",
+        "name": "OpenReku",
         "uuid": "b0a294a5-f7bd-49a3-9eb8-06ec96f7e8c5"
       }
     ],
