@@ -2,6 +2,12 @@
 
 Projekt płytki sterownika rekuperatora OpenReku, rewizja **1.1 z 2026-10-01**. Ten katalog zawiera źródła KiCada, lokalne biblioteki, listę elementów i archiwum produkcyjne PCB. Oprogramowanie ESPHome i pozostałe komponenty projektu należą do osobnych katalogów repozytorium.
 
+## Wizualizacja PCB
+
+![OpenReku PCB 1.1 — widok płytki od góry](OpenReku-PCB.png)
+
+Podgląd płytki bez zamontowanych elementów, z widocznymi padami i nadrukiem. Plik PNG służy do szybkiego przeglądania projektu; pliki produkcyjne znajdują się w archiwum Gerber.
+
 ## Otwieranie projektu
 
 Otwórz [OpenReku.kicad_pro](OpenReku.kicad_pro) w **KiCad 10**. Pakiet przygotowano i sprawdzono w KiCad 10.0.6. Potrzebne są standardowe biblioteki symboli, footprintów i — do podglądu 3D — modeli KiCad 10.
@@ -24,6 +30,7 @@ Zachowaj razem wszystkie pliki z tego katalogu i podkatalog `Rekuperator.pretty`
 | [fp-lib-table](fp-lib-table) | Tabela bibliotek footprintów projektu: rejestruje katalog `Rekuperator.pretty`. |
 | [BOM.csv](BOM.csv) | Lista elementów wersji 1.1, wyeksportowana z całej hierarchii schematu. Format CSV UTF-8, separator przecinek. |
 | [OpenReku-v1.1-Gerber.zip](OpenReku-v1.1-Gerber.zip) | Archiwum do wykonania samej PCB: Gerbery obu warstw miedzi, obu soldermasek, górnego nadruku i obrysu, wiercenia PTH/NPTH oraz opis zadania `.gbrjob`. Nie zawiera plików automatycznego montażu. |
+| [OpenReku-PCB.png](OpenReku-PCB.png) | Wizualizacja PCB 1.1 od góry, bez zamontowanych elementów; obraz PNG 1768 × 1568 px. |
 | [README.md](README.md) | Ten opis zawartości, rewizji i sposobu korzystania z projektu. |
 
 ### Lokalna biblioteka footprintów
