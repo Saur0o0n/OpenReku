@@ -12,7 +12,11 @@ Podgląd płytki bez zamontowanych elementów, z widocznymi padami i nadrukiem. 
 
 Otwórz [OpenReku.kicad_pro](OpenReku.kicad_pro) w **KiCad 10**. Pakiet przygotowano i sprawdzono w KiCad 10.0.6. Potrzebne są standardowe biblioteki symboli, footprintów i — do podglądu 3D — modeli KiCad 10.
 
-Zachowaj razem wszystkie pliki z tego katalogu i podkatalog `Rekuperator.pretty`. Tabele bibliotek korzystają z `${KIPRJMOD}`, czyli katalogu otwartego projektu. Historyczna nazwa biblioteki `Rekuperator` jest celowa: odwołują się do niej schemat i PCB. Nie należy zmieniać jej niezależnie od tych odwołań.
+Zachowaj razem wszystkie pliki z tego katalogu i podkatalog `Rekuperator.pretty`. KiCad odnajduje lokalne biblioteki względem katalogu, w którym znajduje się `OpenReku.kicad_pro`. Dzięki temu projekt można sklonować do dowolnego miejsca na komputerze.
+
+W plikach `fp-lib-table` i `sym-lib-table` katalog projektu oznaczono zmienną KiCada `${KIPRJMOD}`. Jej wartość podstawia KiCad podczas otwierania projektu; GitHub nie rozwija tej zmiennej w README. Nie trzeba jej ręcznie zastępować ścieżką do katalogu.
+
+Historyczna nazwa biblioteki `Rekuperator` jest celowa: odwołują się do niej schemat i PCB. Nie należy zmieniać jej niezależnie od tych odwołań.
 
 ## Zawartość katalogu
 
