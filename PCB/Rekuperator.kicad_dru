@@ -1,0 +1,4 @@
+(version 1)
+(rule "MAINS to low voltage - 8 mm"
+ (condition "(A.NetClass == 'MAINS' && B.NetClass != 'MAINS') || (B.NetClass == 'MAINS' && A.NetClass != 'MAINS')")
+ (constraint clearance (min 8mm)))

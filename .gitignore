@@ -1,0 +1,18 @@
+# KiCad: lokalne ustawienia interfejsu
+PCB/**/*.kicad_prl
+
+# KiCad: blokady otwartych projektow i plikow
+PCB/**/*.lck
+
+# KiCad: automatyczne kopie zapasowe i zapis awaryjny
+PCB/**/*-backups/
+PCB/**/_autosave-*
+PCB/**/*.kicad_sch-bak
+PCB/**/*.kicad_pcb-bak
+PCB/**/*.sch-bak
+PCB/**/*.brd-bak
+PCB/**/*.bak
+PCB/**/*~
+
+# KiCad: odtwarzalny indeks footprintow
+PCB/**/fp-info-cache
