@@ -26,10 +26,4 @@ Nazwy wpisów w `secrets.yaml`:
 - `rekuperator_api_encryption_key` — klucz szyfrowania API ESPHome/Home Assistant;
 - `rekuperator_fallback_ap_password` — hasło awaryjnego punktu dostępowego urządzenia.
 
-Kod skopiowano bez zmian z konfiguracji używanej w działającej instalacji rekuperatora 2026-10-01. Parametry w `substitutions`, przypisania GPIO, kanały I²C i kalibracje odpowiadają tej instalacji; przed użyciem z własnym urządzeniem należy je porównać z jego połączeniami. W szczególności konfiguracja pomija kanał 2 multipleksera ze względu na opisany w źródle uszkodzony styk. Nie zmieniono tych ustawień przy publikacji.
-
-## Kontrola przed publikacją
-
-Sprawdzono składnię YAML, kompletność czterech odwołań `!secret` względem pliku wzorcowego i brak jawnych danych dostępowych w publikowanym zestawie. Konfiguracja nie wymaga dodatkowych plików `!include` ani zewnętrznych pakietów. Nie dołączono lokalnego pliku sekretów, plików kompilacji ani katalogu `.esphome`.
-
-W ramach tej publikacji nie uruchomiono walidacji ESPHome, kompilacji ani wgrywania firmware. Kontrola składni YAML nie zastępuje walidacji komponentów przez ESPHome ani testu urządzenia.
+Parametry w `substitutions`, przypisania GPIO, kanały I²C i kalibracje odpowiadają instalacji autora; przed użyciem z własnym urządzeniem należy je porównać z jego połączeniami. Konfiguracja pomija kanał 2 multipleksera ze względu na uszkodzony styk w tej instalacji.
