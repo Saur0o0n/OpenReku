@@ -1,0 +1,31 @@
+alias: Regulacja korekty bilansu wentylatora
+description: >-
+  Ustawia wartość korekty bilansu na 30 przy włączeniu wentylatora, zeruje przy
+  wyłączeniu
+triggers:
+  - trigger: state
+    entity_id: switch.shelly1pm3_wentylator_switch_0
+    to: null
+actions:
+  - choose:
+      - conditions:
+          - condition: state
+            entity_id: switch.shelly1pm3_wentylator_switch_0
+            state: 'on'
+        sequence:
+          - target:
+              entity_id: number.kotlownia_rekuperator_korekta_bilansu_wlot_wylot
+            data:
+              value: 30
+            action: number.set_value
+      - conditions:
+          - condition: state
+            entity_id: switch.shelly1pm3_wentylator_switch_0
+            state: 'off'
+        sequence:
+          - target:
+              entity_id: number.kotlownia_rekuperator_korekta_bilansu_wlot_wylot
+            data:
+              value: 0
+            action: number.set_value
+mode: restart

@@ -8,6 +8,7 @@ Karta `picture-elements` z odczytami temperatury i wilgotności, obrotami i prze
 | --- | --- |
 | [karta_rekuperator.yaml](karta_rekuperator.yaml) | Konfiguracja karty do wklejenia w edytorze YAML panelu Home Assistant. |
 | [test_filtrow.yaml](test_filtrow.yaml) | Automatyzacja uruchamiająca codzienny test filtrów o 03:30. |
+| [korekta_bilansu_wyciag.yaml](korekta_bilansu_wyciag.yaml) | Korekta bilansu nawiew/wywiew zależna od stanu wyciągu kuchennego. |
 | [rekuperator2.jpg](rekuperator2.jpg) | Podkład graficzny karty z ilustracją rekuperatora i polami na odczyty. |
 
 ## Przykład
@@ -29,6 +30,12 @@ YAML zawiera kartę z ilustracją po lewej stronie. Wykresy temperatur i wilgotn
 W edytorze automatyzacji Home Assistant utwórz nową automatyzację i wklej w trybie YAML zawartość [test_filtrow.yaml](test_filtrow.yaml). Godzina `03:30:00` odnosi się do strefy czasowej Home Assistanta.
 
 Automatyzacja wywołuje `esphome.rekuperator_run_filter_test`. Jeśli urządzenie ma inną nazwę, wybierz odpowiadającą mu akcję `run_filter_test`. Procedurę pomiarową wykonuje ESPHome.
+
+## Wyciąg kuchenny
+
+Wklej [korekta_bilansu_wyciag.yaml](korekta_bilansu_wyciag.yaml) jako osobną automatyzację w edytorze YAML. Ustawia korektę bilansu na `30` przy włączonym wyciągu i na `0` przy wyłączonym.
+
+Dopasuj encję wyciągu `switch.shelly1pm3_wentylator_switch_0` oraz encję korekty `number.kotlownia_rekuperator_korekta_bilansu_wlot_wylot` do swojej instalacji.
 
 ## Encje i obsługa
 
