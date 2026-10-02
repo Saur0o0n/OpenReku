@@ -9,7 +9,6 @@ Konfiguracja ESPHome sterownika rekuperatora: ESP32 z frameworkiem ESP-IDF, inte
 | [rekuperator.yaml](rekuperator.yaml) | Kod konfiguracji ESPHome, obejmujący komponenty urządzenia, automatyzacje i fragmenty C++ w lambdach. |
 | [secrets.yaml.example](secrets.yaml.example) | Wzór wymaganych danych dostępowych. Zawiera wyłącznie pola do uzupełnienia. |
 | `secrets.yaml` | Lokalny plik z własnymi danymi, tworzony na podstawie wzoru. Jest ignorowany przez Git i nie należy go publikować. |
-| [README.md](README.md) | Opis zawartości i przygotowania konfiguracji. |
 
 ## Przygotowanie
 

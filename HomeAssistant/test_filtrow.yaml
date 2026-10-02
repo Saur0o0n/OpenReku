@@ -1,0 +1,10 @@
+alias: "Rekuperator — codzienny test przepływu"
+description: "Uruchamia procedurę testową codziennie o 03:30."
+triggers:
+  - trigger: time
+    at: "03:30:00"
+conditions: []
+actions:
+  - action: esphome.rekuperator_run_filter_test
+    data: {}
+mode: single

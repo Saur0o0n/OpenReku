@@ -7,9 +7,8 @@ Karta `picture-elements` z odczytami temperatury i wilgotności, obrotami i prze
 | Plik | Przeznaczenie |
 | --- | --- |
 | [karta_rekuperator.yaml](karta_rekuperator.yaml) | Konfiguracja karty do wklejenia w edytorze YAML panelu Home Assistant. |
+| [test_filtrow.yaml](test_filtrow.yaml) | Automatyzacja uruchamiająca codzienny test filtrów o 03:30. |
 | [rekuperator2.jpg](rekuperator2.jpg) | Podkład graficzny karty z ilustracją rekuperatora i polami na odczyty. |
-| [przyklad-karty.png](przyklad-karty.png) | Przykładowy widok karty w działającej instalacji. |
-| [README.md](README.md) | Instrukcja dodania karty i dopasowania encji. |
 
 ## Przykład
 
@@ -24,6 +23,12 @@ YAML zawiera kartę z ilustracją po lewej stronie. Wykresy temperatur i wilgotn
 3. Skopiuj `rekuperator2.jpg` do katalogu `www` konfiguracji Home Assistant, zwykle `/config/www/rekuperator2.jpg`. W YAML odpowiada mu ścieżka `image: /local/rekuperator2.jpg`. Jeśli tworzysz katalog `www` po raz pierwszy, uruchom ponownie Home Assistant. [Opis obsługi plików lokalnych](https://www.home-assistant.io/integrations/http/#hosting-files).
 4. W edycji panelu dodaj kartę ręczną i wklej zawartość `karta_rekuperator.yaml`.
 5. Dopasuj identyfikatory encji do swojej instalacji. Plik używa nazw z prefiksem `kotlownia_rekuperator_`; mogą się one różnić od nazw utworzonych przez Twoją integrację ESPHome.
+
+## Test filtrów
+
+W edytorze automatyzacji Home Assistant utwórz nową automatyzację i wklej w trybie YAML zawartość [test_filtrow.yaml](test_filtrow.yaml). Godzina `03:30:00` odnosi się do strefy czasowej Home Assistanta.
+
+Automatyzacja wywołuje `esphome.rekuperator_run_filter_test`. Jeśli urządzenie ma inną nazwę, wybierz odpowiadającą mu akcję `run_filter_test`. Procedurę pomiarową wykonuje ESPHome.
 
 ## Encje i obsługa
 
