@@ -16,3 +16,8 @@ PCB/**/*~
 
 # KiCad: odtwarzalny indeks footprintow
 PCB/**/fp-info-cache
+
+# ESPHome: lokalne dane dostepowe i pliki robocze
+ESPHome/**/secrets.yaml
+ESPHome/**/secrets.yml
+ESPHome/**/.esphome/

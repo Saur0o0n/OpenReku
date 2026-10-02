@@ -1,0 +1,1220 @@
+substitutions:
+  devicename: rekuperator
+  friendly_name: Rekuperator
+  belimo_pulse_time: 88s
+
+  # Venturi geometry
+  venturi_D_mm: "194.0"   # upstream pipe diameter (200-2*3)
+  venturi_d_mm: "154.0"   # throat diameter (160-2*3)
+
+  # Assumed absolute air pressure for density calculation
+  air_pressure_pa: "101325.0"
+
+  # Venturi zero-noise threshold [hPa] - na postoju maksymalny zmierzony blad byl 0,00042
+  venturi_noise: "0.0005f"
+
+esphome:
+  name: ${devicename}
+  friendly_name: ${friendly_name}
+  on_boot:
+    priority: -100
+    then:
+      # Restore the last completed test before accepting HA connections.
+      - lambda: |-
+          id(filter_test_wlot_flow_per_pwm).publish_state(id(filter_test_saved_results)[0]);
+          id(filter_test_wylot_flow_per_pwm).publish_state(id(filter_test_saved_results)[1]);
+          id(filter_test_wlot_rpm_per_pwm).publish_state(id(filter_test_saved_results)[2]);
+          id(filter_test_wylot_rpm_per_pwm).publish_state(id(filter_test_saved_results)[3]);
+      - delay: 500ms
+      - fan.turn_off: internal_fan1_pwm
+      - fan.turn_off: internal_fan2_pwm
+  on_shutdown:
+    then:
+      - fan.turn_off: internal_fan1_pwm
+      - fan.turn_off: internal_fan2_pwm
+      - switch.turn_off: internal_recuperator_main_relay
+
+esp32:
+  variant: esp32
+  framework:
+    type: esp-idf
+
+logger:
+
+api:
+  encryption:
+    key: !secret rekuperator_api_encryption_key
+
+  # HA owns the schedule; this action only starts the local procedure.
+  actions:
+    - action: run_filter_test
+      then:
+        - script.execute: filter_test_cycle
+
+ota:
+  - platform: esphome
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:
+    ssid: Rekuperator Fallback Hotspot
+    password: !secret rekuperator_fallback_ap_password
+
+captive_portal:
+
+web_server:
+  port: 80
+
+i2c:
+  id: i2c_main
+  sda: GPIO21
+  scl: GPIO19
+  frequency: 50kHz
+  scan: true
+
+tca9548a:
+  - id: mux0
+    address: 0x70
+    i2c_id: i2c_main
+    channels:
+      # CH0 -> SHT40 "Czerpnia"
+      - bus_id: i2c_ch0
+        channel: 0
+
+      # CH1 -> SHT40 "Wyrzutnia"
+      - bus_id: i2c_ch1
+        channel: 1
+
+      # Kanał 2 ma uszkodzony styk
+
+      # CH3 -> SHT40 "Nawiew"
+      - bus_id: i2c_ch2
+        channel: 3
+
+      # CH4 -> SHT40 "Wywiew"
+      - bus_id: i2c_ch3
+        channel: 4
+
+      # CH5 -> SDP810-125Pa Venturi "Wlot"
+      - bus_id: i2c_ch4
+        channel: 5
+
+      # CH6 -> SDP810-125Pa Venturi "Wylot"
+      - bus_id: i2c_ch5
+        channel: 6
+
+globals:
+  # Bypass deadband in degrees C and uninterrupted condition time in seconds.
+  - id: bypass_temperature_threshold
+    type: float
+    restore_value: false
+    initial_value: '0.5f'
+
+  - id: bypass_hold_seconds
+    type: uint32_t
+    restore_value: false
+    initial_value: '300'
+
+  # Pending transition: -1 = none, 0 = close, 1 = open.
+  - id: bypass_pending_target
+    type: int
+    restore_value: false
+    initial_value: '-1'
+
+  - id: bypass_pending_since
+    type: uint32_t
+    restore_value: false
+    initial_value: '0'
+
+  # Last completed test: Wlot Q/PWM, Wylot Q/PWM, Wlot RPM/PWM, Wylot RPM/PWM.
+  # One persistent snapshot; unknown until the first completed test.
+  - id: filter_test_saved_results
+    type: float[4]
+    restore_value: true
+    initial_value: '{NAN, NAN, NAN, NAN}'
+
+  # Fan speed percentage (1-100), before the existing LEDC min_power scaling.
+  - id: filter_test_pwm
+    type: int
+    restore_value: false
+    initial_value: '30'
+
+  # Set only by local service procedures; never restored after an ESP restart.
+  - id: internal_service_mode
+    type: bool
+    restore_value: false
+    initial_value: 'false'
+
+  # Temporary test snapshot and accumulators; lost on ESP restart.
+  - id: filter_test_prev_sync_mode
+    type: std::string
+    restore_value: false
+    initial_value: '"Brak"'
+
+  - id: filter_test_prev_fan1_on
+    type: bool
+    restore_value: false
+    initial_value: 'false'
+
+  - id: filter_test_prev_fan2_on
+    type: bool
+    restore_value: false
+    initial_value: 'false'
+
+  - id: filter_test_prev_fan1_speed
+    type: int
+    restore_value: false
+    initial_value: '0'
+
+  - id: filter_test_prev_fan2_speed
+    type: int
+    restore_value: false
+    initial_value: '0'
+
+  - id: filter_test_prev_bypass_open
+    type: bool
+    restore_value: false
+    initial_value: 'false'
+
+  - id: filter_test_running_pwm
+    type: int
+    restore_value: false
+    initial_value: '30'
+
+  - id: filter_test_wlot_flow_sum
+    type: float
+    restore_value: false
+    initial_value: '0.0f'
+
+  - id: filter_test_wylot_flow_sum
+    type: float
+    restore_value: false
+    initial_value: '0.0f'
+
+  - id: filter_test_wlot_rpm_sum
+    type: float
+    restore_value: false
+    initial_value: '0.0f'
+
+  - id: filter_test_wylot_rpm_sum
+    type: float
+    restore_value: false
+    initial_value: '0.0f'
+
+  # Pamięć regulatora PI dla synchronizacji przepływu.
+  - id: flow_sync_integral
+    type: float
+    restore_value: false
+    initial_value: '0.0f'
+
+  # PWM wyliczone przez regulator; -1 oznacza: nie zmieniaj wentylatora.
+  - id: flow_sync_next_speed
+    type: int
+    restore_value: false
+    initial_value: '-1'
+
+binary_sensor:
+  - platform: template
+    name: "Tryb serwisowy"
+    id: service_mode
+    icon: mdi:wrench
+    entity_category: diagnostic
+    lambda: 'return id(internal_service_mode);'
+
+sensor:
+  # Published once per completed test, including unchanged daily results.
+  # PWM means the fan speed setting in percentage points, not raw LEDC duty.
+  - platform: template
+    name: "Wlot - przepływ na 1% PWM (test)"
+    id: filter_test_wlot_flow_per_pwm
+    entity_category: diagnostic
+    state_class: measurement
+    unit_of_measurement: "m³/h/%"
+    accuracy_decimals: 3
+    icon: mdi:air-filter
+    update_interval: never
+    force_update: true
+
+  - platform: template
+    name: "Wlot - RPM na 1% PWM (test)"
+    id: filter_test_wlot_rpm_per_pwm
+    entity_category: diagnostic
+    state_class: measurement
+    unit_of_measurement: "rpm/%"
+    accuracy_decimals: 2
+    icon: mdi:fan
+    update_interval: never
+    force_update: true
+
+  - platform: template
+    name: "Wylot - przepływ na 1% PWM (test)"
+    id: filter_test_wylot_flow_per_pwm
+    entity_category: diagnostic
+    state_class: measurement
+    unit_of_measurement: "m³/h/%"
+    accuracy_decimals: 3
+    icon: mdi:air-filter
+    update_interval: never
+    force_update: true
+
+  - platform: template
+    name: "Wylot - RPM na 1% PWM (test)"
+    id: filter_test_wylot_rpm_per_pwm
+    entity_category: diagnostic
+    state_class: measurement
+    unit_of_measurement: "rpm/%"
+    accuracy_decimals: 2
+    icon: mdi:fan
+    update_interval: never
+    force_update: true
+
+  # ---- SHT4x sensors ----
+  - platform: sht4x
+    i2c_id: i2c_ch1
+    update_interval: 30s
+    precision: High
+    temperature:
+      name: "Czerpnia - Temperatura"
+      id: czerpnia_temp
+    humidity:
+      name: "Czerpnia - Wilgotność"
+      id: czerpnia_hum
+
+  - platform: sht4x
+    i2c_id: i2c_ch3
+    update_interval: 30s
+    precision: High
+    temperature:
+      name: "Wyrzutnia - Temperatura"
+      id: wyrzutnia_temp
+    humidity:
+      name: "Wyrzutnia - Wilgotność"
+      id: wyrzutnia_hum
+
+  - platform: sht4x
+    i2c_id: i2c_ch2
+    update_interval: 30s
+    precision: High
+    temperature:
+      name: "Nawiew - Temperatura"
+      id: nawiew_temp
+    humidity:
+      name: "Nawiew - Wilgotność"
+      id: nawiew_hum
+
+  - platform: sht4x
+    i2c_id: i2c_ch0
+    update_interval: 30s
+    precision: High
+    temperature:
+      name: "Wywiew - Temperatura"
+      id: wywiew_temp
+    humidity:
+      name: "Wywiew - Wilgotność"
+      id: wywiew_hum
+
+  # ---- SDP810-125Pa ----
+  - platform: sdp3x
+    i2c_id: i2c_ch4
+    address: 0x25
+    measurement_mode: differential_pressure
+    update_interval: 2s
+    name: "Wlot Venturi Differential Pressure"
+    id: wlot_venturi_dp
+    unit_of_measurement: "hPa"
+    accuracy_decimals: 5
+    filters:
+      # Martwa strefa: usuwa szum pomiaru, gdy wentylator stoi.
+      - lambda: |-
+          if (fabsf(x) < ${venturi_noise}) {
+            return 0.0f;
+          }
+          return x;
+
+  - platform: sdp3x
+    i2c_id: i2c_ch5
+    address: 0x25
+    measurement_mode: differential_pressure
+    update_interval: 2s
+    name: "Wylot Venturi Differential Pressure"
+    id: wylot_venturi_dp
+    unit_of_measurement: "hPa"
+    accuracy_decimals: 5
+    filters:
+      # Martwa strefa: usuwa szum pomiaru, gdy wentylator stoi.
+      - lambda: |-
+          if (fabsf(x) < ${venturi_noise}) {
+            return 0.0f;
+          }
+          return x;
+
+  # ---- Derived air density from temperature ----
+  - platform: template
+    name: "Wlot - gęstość powietrza"
+    id: wlot_air_density
+    unit_of_measurement: "kg/m³"
+    accuracy_decimals: 3
+    update_interval: 30s
+    lambda: |-
+      const float t_c = id(nawiew_temp).state;
+      if (isnan(t_c)) return NAN;
+
+      const float T = t_c + 273.15f;
+      if (T <= 0.0f) return NAN;
+
+      return ${air_pressure_pa} / (287.05f * T);
+
+  - platform: template
+    name: "Wylot - gęstość powietrza"
+    id: wylot_air_density
+    unit_of_measurement: "kg/m³"
+    accuracy_decimals: 3
+    update_interval: 30s
+    lambda: |-
+      const float t_c = id(wywiew_temp).state;
+      if (isnan(t_c)) return NAN;
+
+      const float T = t_c + 273.15f;
+      if (T <= 0.0f) return NAN;
+
+      return ${air_pressure_pa} / (287.05f * T);
+
+  # ---- Venturi velocity ----
+  - platform: template
+    name: "Wlot - prędkość powietrza"
+    id: wlot_air_velocity
+    unit_of_measurement: "m/s"
+    accuracy_decimals: 2
+    update_interval: 2s
+    lambda: |-
+      const float dp_hpa = id(wlot_venturi_dp).state;
+      const float dp = dp_hpa * 100.0f;  // hPa -> Pa
+      const float rho = id(wlot_air_density).state;
+
+      if (isnan(dp) || isnan(rho) || dp <= 0.0f || rho <= 0.0f) {
+        return 0.0f;
+      }
+
+      const float D = ${venturi_D_mm} / 1000.0f;
+      const float d = ${venturi_d_mm} / 1000.0f;
+      const float beta = d / D;
+      const float Cd = 0.98f;
+      const float A1 = 3.14159265f * D * D / 4.0f;
+      const float A2 = 3.14159265f * d * d / 4.0f;
+      const float denom = rho * (1.0f - powf(beta, 4.0f));
+
+      if (denom <= 0.0f || A1 <= 0.0f) return NAN;
+
+      const float q = Cd * A2 * sqrtf((2.0f * dp) / denom);
+      return q / A1;
+
+  - platform: template
+    name: "Wylot - prędkość powietrza"
+    id: wylot_air_velocity
+    unit_of_measurement: "m/s"
+    accuracy_decimals: 2
+    update_interval: 2s
+    lambda: |-
+      const float dp_hpa = id(wylot_venturi_dp).state;
+      const float dp = dp_hpa * 100.0f;  // hPa -> Pa
+      const float rho = id(wylot_air_density).state;
+
+      if (isnan(dp) || isnan(rho) || dp <= 0.0f || rho <= 0.0f) {
+        return 0.0f;
+      }
+
+      const float D = ${venturi_D_mm} / 1000.0f;
+      const float d = ${venturi_d_mm} / 1000.0f;
+      const float beta = d / D;
+      const float Cd = 0.98f;
+      const float A1 = 3.14159265f * D * D / 4.0f;
+      const float A2 = 3.14159265f * d * d / 4.0f;
+      const float denom = rho * (1.0f - powf(beta, 4.0f));
+
+      if (denom <= 0.0f || A1 <= 0.0f) return NAN;
+
+      const float q = Cd * A2 * sqrtf((2.0f * dp) / denom);
+      return q / A1;
+
+  # ---- Volumetric airflow ----
+  - platform: template
+    name: "Wlot - przepływ powietrza"
+    id: wlot_airflow
+    state_class: measurement
+    unit_of_measurement: "m³/h"
+    accuracy_decimals: 1
+    update_interval: 2s
+    filters:
+      # Usuwa krótkie piki i pojedyncze anomalie.
+      - median:
+          window_size: 5
+          send_every: 1
+          send_first_at: 1
+
+      # Mocniejsze wygładzenie niż dotychczasowe alpha: 0.50,
+      # ale bez sztywnego opóźnienia średniej kroczącej.
+      - exponential_moving_average:
+          alpha: 0.25
+          send_every: 1
+          send_first_at: 1
+    lambda: |-
+      const float v = id(wlot_air_velocity).state;
+      if (isnan(v) || v <= 0.0f) return 0.0f;
+
+      const float D = ${venturi_D_mm} / 1000.0f;
+      const float A1 = 3.14159265f * D * D / 4.0f;
+      return v * A1 * 3600.0f;
+
+  - platform: template
+    name: "Wylot - przepływ powietrza"
+    id: wylot_airflow
+    state_class: measurement
+    unit_of_measurement: "m³/h"
+    accuracy_decimals: 1
+    update_interval: 2s
+    filters:
+      # Usuwa krótkie piki i pojedyncze anomalie.
+      - median:
+          window_size: 5
+          send_every: 1
+          send_first_at: 1
+
+      # Mocniejsze wygładzenie niż dotychczasowe alpha: 0.50,
+      # ale bez sztywnego opóźnienia średniej kroczącej.
+      - exponential_moving_average:
+          alpha: 0.25
+          send_every: 1
+          send_first_at: 1
+    lambda: |-
+      const float v = id(wylot_air_velocity).state;
+      if (isnan(v) || v <= 0.0f) return 0.0f;
+
+      const float D = ${venturi_D_mm} / 1000.0f;
+      const float A1 = 3.14159265f * D * D / 4.0f;
+      return v * A1 * 3600.0f;
+
+  # ---- Fan tachometers ----
+  - platform: pulse_counter
+    pin:
+      number: GPIO34
+      mode:
+        input: true
+        pullup: false
+    name: "Wylot RPM"
+    id: fan1_rpm
+    unit_of_measurement: "rpm"
+    accuracy_decimals: 0
+    use_pcnt: true
+    internal_filter: 10us
+    update_interval: 5s
+    count_mode:
+      rising_edge: DISABLE
+      falling_edge: INCREMENT
+    filters:
+      - multiply: 1.0
+
+  - platform: pulse_counter
+    pin:
+      number: GPIO35
+      mode:
+        input: true
+        pullup: false
+    name: "Wlot RPM"
+    id: fan2_rpm
+    unit_of_measurement: "rpm"
+    accuracy_decimals: 0
+    use_pcnt: true
+    internal_filter: 10us
+    update_interval: 5s
+    count_mode:
+      rising_edge: DISABLE
+      falling_edge: INCREMENT
+    filters:
+      - multiply: 1.0
+
+
+output:
+  # 2N3904 stage inverts the fan control signal, so outputs are inverted here.
+  - platform: ledc
+    id: fan1_pwm_output
+    pin:
+      number: GPIO33
+      inverted: true
+    frequency: 1000Hz
+    min_power: 11%
+    max_power: 100%
+    zero_means_zero: true
+
+  - platform: ledc
+    id: fan2_pwm_output
+    pin:
+      number: GPIO32
+      inverted: true
+    frequency: 1000Hz
+    min_power: 11%
+    max_power: 100%
+    zero_means_zero: true
+
+fan:
+  # Fan 1 = Wylot / slave in airflow-sync mode
+  - platform: speed
+    output: fan1_pwm_output
+    id: internal_fan1_pwm
+    name: "internal_Wylot PWM"
+    internal: true
+    speed_count: 100
+    restore_mode: ALWAYS_OFF
+    # Report changes from the hardware and automatic regulation to the public fan.
+    on_state:
+      - lambda: |-
+          id(fan1_pwm).state = id(internal_fan1_pwm).state;
+          id(fan1_pwm).speed = id(internal_fan1_pwm).speed;
+          id(fan1_pwm).publish_state();
+
+  # Fan 2 = Wlot / master
+  - platform: speed
+    output: fan2_pwm_output
+    id: internal_fan2_pwm
+    name: "internal_Wlot PWM"
+    internal: true
+    speed_count: 100
+    restore_mode: ALWAYS_OFF
+    # Report changes from the hardware and automatic regulation to the public fan.
+    on_state:
+      - lambda: |-
+          id(fan2_pwm).state = id(internal_fan2_pwm).state;
+          id(fan2_pwm).speed = id(internal_fan2_pwm).speed;
+          id(fan2_pwm).publish_state();
+    on_speed_set:
+      - if:
+          condition:
+            lambda: |-
+              return id(internal_fan_sync_mode).current_option() == "Moc PWM" &&
+                     id(internal_fan1_pwm).speed != x;
+          then:
+            - fan.turn_on:
+                id: internal_fan1_pwm
+                speed: !lambda 'return x;'
+
+    on_turn_on:
+      - if:
+          condition:
+            lambda: |-
+              return id(internal_fan_sync_mode).current_option() == "Moc PWM" &&
+                     !id(internal_fan1_pwm).state;
+          then:
+            - fan.turn_on:
+                id: internal_fan1_pwm
+                speed: !lambda 'return id(internal_fan2_pwm).speed;'
+
+    on_turn_off:
+      - if:
+          condition:
+            lambda: |-
+              return id(internal_fan_sync_mode).current_option() == "Moc PWM" &&
+                     id(internal_fan1_pwm).state;
+          then:
+            - fan.turn_off: internal_fan1_pwm
+
+  # Public controls require power on and service mode off.
+  - platform: template
+    id: fan1_pwm
+    name: "Wylot PWM"
+    speed_count: 100
+    restore_mode: NO_RESTORE
+    on_state:
+      - lambda: |-
+          // State feedback must not send another command to the hardware.
+          if (id(fan1_pwm).state == id(internal_fan1_pwm).state &&
+              id(fan1_pwm).speed == id(internal_fan1_pwm).speed) return;
+
+          // Template fan has already accepted the requested state locally.
+          // Reject the command and report the unchanged internal state.
+          // In either synchronization mode, only internal control owns exhaust.
+          const auto sync_mode = id(internal_fan_sync_mode).current_option();
+          if (id(internal_service_mode) ||
+              !id(internal_recuperator_power).state ||
+              sync_mode == "Moc PWM" ||
+              sync_mode == "Przepływ powietrza") {
+            id(fan1_pwm).state = id(internal_fan1_pwm).state;
+            id(fan1_pwm).speed = id(internal_fan1_pwm).speed;
+            id(fan1_pwm).publish_state();
+            return;
+          }
+
+          auto call = id(internal_fan1_pwm).make_call();
+          call.set_state(id(fan1_pwm).state);
+          if (id(fan1_pwm).speed > 0)
+            call.set_speed(id(fan1_pwm).speed);
+          call.perform();
+
+  - platform: template
+    id: fan2_pwm
+    name: "Wlot PWM"
+    speed_count: 100
+    restore_mode: NO_RESTORE
+    on_state:
+      - lambda: |-
+          // State feedback must not send another command to the hardware.
+          if (id(fan2_pwm).state == id(internal_fan2_pwm).state &&
+              id(fan2_pwm).speed == id(internal_fan2_pwm).speed) return;
+
+          // Template fan has already accepted the requested state locally.
+          // Reject the command and report the unchanged internal state.
+          if (id(internal_service_mode) || !id(internal_recuperator_power).state) {
+            id(fan2_pwm).state = id(internal_fan2_pwm).state;
+            id(fan2_pwm).speed = id(internal_fan2_pwm).speed;
+            id(fan2_pwm).publish_state();
+            return;
+          }
+
+          auto call = id(internal_fan2_pwm).make_call();
+          call.set_state(id(fan2_pwm).state);
+          if (id(fan2_pwm).speed > 0)
+            call.set_speed(id(fan2_pwm).speed);
+          call.perform();
+
+switch:
+  - platform: gpio
+    id: internal_recuperator_main_relay
+    name: "internal_Rekuperator zasilanie"
+    internal: true
+    pin:
+      number: GPIO16
+      inverted: false
+    restore_mode: ALWAYS_OFF
+
+  - platform: gpio
+    id: belimo_open_relay
+    name: "Belimo Open Relay Raw"
+    internal: true
+    pin:
+      number: GPIO23
+      inverted: false
+    restore_mode: ALWAYS_OFF
+    interlock: [belimo_close_relay]
+    interlock_wait_time: 500ms
+
+  - platform: gpio
+    id: belimo_close_relay
+    name: "Belimo Close Relay Raw"
+    internal: true
+    pin:
+      number: GPIO22
+      inverted: false
+    restore_mode: ALWAYS_OFF
+    interlock: [belimo_open_relay]
+    interlock_wait_time: 500ms
+
+  - platform: template
+    name: "internal_Zasilanie rekuperatora"
+    internal: true
+    id: internal_recuperator_power
+    icon: mdi:power
+    optimistic: true
+    restore_mode: ALWAYS_OFF
+    turn_on_action:
+      - switch.turn_on: internal_recuperator_main_relay
+      - delay: 1s
+      - valve.close: internal_bypass
+    turn_off_action:
+      - lambda: 'id(bypass_pending_target) = -1;'
+      - fan.turn_off: internal_fan1_pwm
+      - fan.turn_off: internal_fan2_pwm
+      - switch.turn_off: belimo_open_relay
+      - switch.turn_off: belimo_close_relay
+      - delay: 1s
+      - switch.turn_off: internal_recuperator_main_relay
+
+  # Public power control delegates the complete existing power sequence.
+  - platform: template
+    name: "Zasilanie rekuperatora"
+    id: recuperator_power
+    icon: mdi:power
+    optimistic: false
+    restore_mode: DISABLED
+    lambda: 'return id(internal_recuperator_power).state;'
+    turn_on_action:
+      - if:
+          condition:
+            lambda: 'return !id(internal_service_mode);'
+          then:
+            - switch.turn_on: internal_recuperator_power
+    turn_off_action:
+      - if:
+          condition:
+            lambda: 'return !id(internal_service_mode);'
+          then:
+            - switch.turn_off: internal_recuperator_power
+
+number:
+  - platform: template
+    name: "internal_Korekta bilansu Wlot-Wylot"
+    internal: true
+    id: internal_airflow_balance_offset
+    icon: mdi:swap-vertical
+    unit_of_measurement: "m³/h"
+    min_value: -50
+    max_value: 420
+    step: 5
+    mode: box
+    optimistic: true
+    restore_value: false
+    initial_value: 0
+    on_value:
+      - lambda: 'id(airflow_balance_offset).publish_state(x);'
+
+  - platform: template
+    name: "Korekta bilansu Wlot-Wylot"
+    id: airflow_balance_offset
+    icon: mdi:swap-vertical
+    unit_of_measurement: "m³/h"
+    min_value: -50
+    max_value: 420
+    step: 5
+    mode: box
+    optimistic: false
+    restore_value: false
+    initial_value: 0
+    set_action:
+      - if:
+          condition:
+            lambda: 'return id(internal_recuperator_power).state && !id(internal_service_mode);'
+          then:
+            - number.set:
+                id: internal_airflow_balance_offset
+                value: !lambda 'return x;'
+          else:
+            - lambda: 'id(airflow_balance_offset).publish_state(id(internal_airflow_balance_offset).state);'
+
+select:
+  - platform: template
+    name: "Tryb sterowania bypassem"
+    id: bypass_control_mode
+    icon: mdi:valve
+    optimistic: false
+    restore_value: false
+    initial_option: "Ręczne sterowanie"
+    options:
+      - "Ręczne sterowanie"
+      - "Automatyczne grzanie"
+      - "Automatyczne chłodzenie"
+    set_action:
+      - if:
+          condition:
+            lambda: 'return id(internal_recuperator_power).state && !id(internal_service_mode);'
+          then:
+            - lambda: |-
+                if (id(bypass_control_mode).current_option() != x) {
+                  id(bypass_pending_target) = -1;
+                }
+                id(bypass_control_mode).publish_state(x);
+            - script.execute: regulate_bypass
+          else:
+            - lambda: 'id(bypass_control_mode).publish_state(id(bypass_control_mode).current_option());'
+
+  - platform: template
+    name: "internal_Synchronizacja wentylatorów"
+    internal: true
+    id: internal_fan_sync_mode
+    icon: mdi:sync
+    optimistic: true
+    restore_value: false
+    initial_option: "Brak"
+    options:
+      - "Brak"
+      - "Moc PWM"
+      - "Przepływ powietrza"
+    on_value:
+      - lambda: 'id(fan_sync_mode).publish_state(x.c_str());'
+    set_action:
+      # Przy zmianie trybu usuwamy pamięć poprzedniej regulacji.
+      - globals.set:
+          id: flow_sync_integral
+          value: '0.0f'
+      - globals.set:
+          id: flow_sync_next_speed
+          value: '-1'
+
+      # W trybie PWM Wylot natychmiast przyjmuje stan i moc Wlotu.
+      - if:
+          condition:
+            lambda: 'return x == "Moc PWM";'
+          then:
+            - if:
+                condition:
+                  fan.is_on: internal_fan2_pwm
+                then:
+                  - fan.turn_on:
+                      id: internal_fan1_pwm
+                      speed: !lambda 'return id(internal_fan2_pwm).speed;'
+                else:
+                  - fan.turn_off: internal_fan1_pwm
+
+  - platform: template
+    name: "Synchronizacja wentylatorów"
+    id: fan_sync_mode
+    icon: mdi:sync
+    optimistic: false
+    restore_value: false
+    initial_option: "Brak"
+    options:
+      - "Brak"
+      - "Moc PWM"
+      - "Przepływ powietrza"
+    set_action:
+      - if:
+          condition:
+            lambda: 'return id(internal_recuperator_power).state && !id(internal_service_mode);'
+          then:
+            - select.set:
+                id: internal_fan_sync_mode
+                option: !lambda 'return std::string(x.c_str());'
+          else:
+            - lambda: 'id(fan_sync_mode).publish_state(id(internal_fan_sync_mode).current_option());'
+
+script:
+  - id: regulate_bypass
+    mode: single
+    then:
+      - lambda: |-
+          if (!id(internal_recuperator_power).state || id(internal_service_mode)) {
+            id(bypass_pending_target) = -1;
+            return;
+          }
+          const auto mode = id(bypass_control_mode).current_option();
+          if (mode != "Automatyczne grzanie" && mode != "Automatyczne chłodzenie") {
+            id(bypass_pending_target) = -1;
+            return;
+          }
+          const float outside = id(czerpnia_temp).state;
+          const float extract = id(wywiew_temp).state;
+          const float threshold = id(bypass_temperature_threshold);
+          if (!std::isfinite(outside) || !std::isfinite(extract) ||
+              !std::isfinite(threshold) || threshold <= 0.0f) {
+            id(bypass_pending_target) = -1;
+            return;
+          }
+
+          const float benefit = mode == "Automatyczne grzanie"
+              ? outside - extract : extract - outside;
+          const int target = benefit >= threshold ? 1 : (benefit <= -threshold ? 0 : -1);
+          // Inside the deadband keep the position, but restart the hold timer.
+          if (target == -1 || (target == 1 && id(internal_bypass).is_fully_open()) ||
+              (target == 0 && id(internal_bypass).is_fully_closed())) {
+            id(bypass_pending_target) = -1;
+            return;
+          }
+          const uint32_t now = millis();
+          if (id(bypass_pending_target) != target) {
+            id(bypass_pending_target) = target;
+            id(bypass_pending_since) = now;
+          }
+          // Unsigned subtraction remains valid across millis() rollover.
+          if ((uint32_t) (now - id(bypass_pending_since)) / 1000U < id(bypass_hold_seconds)) return;
+          id(bypass_pending_target) = -1;
+          if (target == 1) {
+            id(internal_bypass).make_call().set_command_open().perform();
+          } else {
+            id(internal_bypass).make_call().set_command_close().perform();
+          }
+
+
+  # Single local transaction: lock, snapshot, measure, restore, unlock.
+  # Repeated API calls cannot restart an in-progress test.
+  - id: filter_test_cycle
+    mode: single
+    then:
+      - if:
+          condition:
+            lambda: |-
+              return id(internal_recuperator_power).state &&
+                     id(internal_recuperator_main_relay).state &&
+                     !id(internal_service_mode) &&
+                     id(filter_test_pwm) >= 1 && id(filter_test_pwm) <= 100;
+          then:
+            - lambda: |-
+                id(bypass_pending_target) = -1;
+                id(internal_service_mode) = true;
+                id(service_mode).publish_state(true);
+
+                id(filter_test_prev_sync_mode) =
+                    id(internal_fan_sync_mode).current_option().c_str();
+                id(filter_test_prev_fan1_on) = id(internal_fan1_pwm).state;
+                id(filter_test_prev_fan2_on) = id(internal_fan2_pwm).state;
+                id(filter_test_prev_fan1_speed) = id(internal_fan1_pwm).speed;
+                id(filter_test_prev_fan2_speed) = id(internal_fan2_pwm).speed;
+                id(filter_test_prev_bypass_open) = id(internal_bypass).is_fully_open();
+                id(filter_test_running_pwm) = id(filter_test_pwm);
+
+                id(filter_test_wlot_flow_sum) = 0.0f;
+                id(filter_test_wylot_flow_sum) = 0.0f;
+                id(filter_test_wlot_rpm_sum) = 0.0f;
+                id(filter_test_wylot_rpm_sum) = 0.0f;
+
+                ESP_LOGI("filter_test", "Start testu: nastawa %d%%",
+                         id(filter_test_running_pwm));
+
+            - select.set:
+                id: internal_fan_sync_mode
+                option: "Brak"
+            - fan.turn_on:
+                id: internal_fan1_pwm
+                speed: !lambda 'return id(filter_test_running_pwm);'
+            - fan.turn_on:
+                id: internal_fan2_pwm
+                speed: !lambda 'return id(filter_test_running_pwm);'
+
+            # Always execute the close action, even if the logical state is CLOSED.
+            - valve.close: internal_bypass
+            - delay: ${belimo_pulse_time}
+            # Margin for relay interlock and a pending power-on close command.
+            - delay: 2s
+            - logger.log: "Test przeplywu: stabilizacja przez 4 minuty"
+            - delay: 4min
+
+            - logger.log: "Test przeplywu: 12 odczytow co 5 sekund"
+            - repeat:
+                count: 12
+                then:
+                  - delay: 5s
+                  - lambda: |-
+                      // Intentionally include ALL readings; no rejection or freshness filter.
+                      // NaN/inf propagates into the result rather than becoming a valid zero.
+                      id(filter_test_wlot_flow_sum) += id(wlot_airflow).state;
+                      id(filter_test_wylot_flow_sum) += id(wylot_airflow).state;
+                      // Fan 2 = Wlot; Fan 1 = Wylot.
+                      id(filter_test_wlot_rpm_sum) += id(fan2_rpm).state;
+                      id(filter_test_wylot_rpm_sum) += id(fan1_rpm).state;
+
+            - lambda: |-
+                const float divisor = 12.0f * id(filter_test_running_pwm);
+                const float wlot_q = id(filter_test_wlot_flow_sum) / divisor;
+                const float wylot_q = id(filter_test_wylot_flow_sum) / divisor;
+                const float wlot_rpm = id(filter_test_wlot_rpm_sum) / divisor;
+                const float wylot_rpm = id(filter_test_wylot_rpm_sum) / divisor;
+
+                // Save all results, including non-finite values; no sample rejection.
+                id(filter_test_saved_results)[0] = wlot_q;
+                id(filter_test_saved_results)[1] = wylot_q;
+                id(filter_test_saved_results)[2] = wlot_rpm;
+                id(filter_test_saved_results)[3] = wylot_rpm;
+
+                id(filter_test_wlot_flow_per_pwm).publish_state(wlot_q);
+                id(filter_test_wylot_flow_per_pwm).publish_state(wylot_q);
+                id(filter_test_wlot_rpm_per_pwm).publish_state(wlot_rpm);
+                id(filter_test_wylot_rpm_per_pwm).publish_state(wylot_rpm);
+                ESP_LOGI("filter_test",
+                         "Wyniki przy %d%%: Wlot Q/PWM=%.3f RPM/PWM=%.2f; "
+                         "Wylot Q/PWM=%.3f RPM/PWM=%.2f",
+                         id(filter_test_running_pwm), wlot_q, wlot_rpm, wylot_q, wylot_rpm);
+
+            # Persist this snapshot now, without changing the global flash write interval.
+            - lambda: |-
+                // Use the component pointer: id(...) returns the stored array itself.
+                filter_test_saved_results->update();
+                if (!esphome::global_preferences->sync()) {
+                  ESP_LOGW("filter_test", "Nie udalo sie zapisac wynikow testu do pamieci flash");
+                }
+
+            # Restore the bypass first, without waiting for its travel to finish.
+            # If it was closed, the forced close has already restored that state.
+            - if:
+                condition:
+                  lambda: 'return id(filter_test_prev_bypass_open);'
+                then:
+                  - valve.open: internal_bypass
+
+            - lambda: |-
+                // Restore speed AND on/off atomically: never briefly start an off fan.
+                const auto restore_fan = [](esphome::fan::Fan *fan, bool on, int speed) {
+                  auto call = fan->make_call();
+                  call.set_state(on);
+                  if (speed > 0) call.set_speed(speed);
+                  call.perform();
+                  // Zero is the valid uninitialised speed of an off fan after boot.
+                  // FanCall clamps it to 1, so restore it only after switching off.
+                  if (!on && speed == 0) {
+                    fan->speed = 0;
+                    fan->publish_state();
+                  }
+                };
+                restore_fan(id(internal_fan1_pwm), id(filter_test_prev_fan1_on),
+                            id(filter_test_prev_fan1_speed));
+                restore_fan(id(internal_fan2_pwm), id(filter_test_prev_fan2_on),
+                            id(filter_test_prev_fan2_speed));
+
+            # Restore automatic control only after both fan states are restored.
+            - select.set:
+                id: internal_fan_sync_mode
+                option: !lambda 'return id(filter_test_prev_sync_mode);'
+            - lambda: |-
+                id(internal_service_mode) = false;
+                id(service_mode).publish_state(false);
+            - logger.log: "Test przeplywu zakonczony; ustawienia przywrocone"
+          else:
+            - logger.log:
+                level: WARN
+                format: "Test pominiety: brak zasilania, aktywny serwis lub PWM poza zakresem 1-100"
+
+  - id: belimo_open_script
+    mode: restart
+    then:
+      - switch.turn_off: belimo_close_relay
+      - switch.turn_on: belimo_open_relay
+      - delay: ${belimo_pulse_time}
+      - switch.turn_off: belimo_open_relay
+
+  - id: belimo_close_script
+    mode: restart
+    then:
+      - switch.turn_off: belimo_open_relay
+      - switch.turn_on: belimo_close_relay
+      - delay: ${belimo_pulse_time}
+      - switch.turn_off: belimo_close_relay
+
+valve:
+  - platform: template
+    name: "internal_By-pass"
+    internal: true
+    id: internal_bypass
+    icon: mdi:valve
+    optimistic: true
+    has_position: false
+    open_action:
+      - script.stop: belimo_close_script
+      - switch.turn_off: belimo_close_relay
+      - script.execute: belimo_open_script
+    close_action:
+      - script.stop: belimo_open_script
+      - switch.turn_off: belimo_open_relay
+      - script.execute: belimo_close_script
+
+  - platform: template
+    name: "By-pass"
+    id: bypass
+    icon: mdi:valve
+    optimistic: false
+    has_position: false
+    restore_mode: NO_RESTORE
+    lambda: 'return id(internal_bypass).position;'
+    open_action:
+      - if:
+          condition:
+            lambda: 'return id(internal_recuperator_power).state && !id(internal_service_mode);'
+          then:
+            - valve.open: internal_bypass
+    close_action:
+      - if:
+          condition:
+            lambda: 'return id(internal_recuperator_power).state && !id(internal_service_mode);'
+          then:
+            - valve.close: internal_bypass
+
+interval:
+  - interval: 5s
+    then:
+      - script.execute: regulate_bypass
+
+  - interval: 5s
+    startup_delay: 15s
+    then:
+      - if:
+          condition:
+            lambda: |-
+              return id(internal_fan_sync_mode).current_option() == "Przepływ powietrza";
+          then:
+            - lambda: |-
+                // Wlot jest wartością zadaną.
+                // Wylot jest wartością regulowaną.
+                const float wlot = id(wlot_airflow).state;
+                const float actual = id(wylot_airflow).state;
+                const float offset = id(internal_airflow_balance_offset).state;
+                const float target = wlot - offset;
+
+                id(flow_sync_next_speed) = -1;
+
+                if (isnan(wlot) || isnan(actual) || isnan(offset)) return;
+
+                // Fan 2 = Wlot. Jeśli Wlot nie pracuje albo przepływ jest
+                // poniżej wiarygodnego zakresu pomiaru, wyłącz Wylot.
+                if (!id(internal_fan2_pwm).state || target < 25.0f) {
+                  id(flow_sync_integral) = 0.0f;
+                  id(flow_sync_next_speed) = 0;
+                  return;
+                }
+
+                float error = target - actual;
+
+                // Próg błędu 5,0 m³/h.
+                if (fabsf(error) < 5.0f) error = 0.0f;
+
+                // Zwiększony człon P, zmniejszony I dla szybszej reakcji.
+                const float kp = 0.030f;
+                const float ki = 0.0005f;
+
+                // Propozycja całki z limitem.
+                float integral_candidate = id(flow_sync_integral) + error;
+                if (integral_candidate > 1500.0f) integral_candidate = 1500.0f;
+                if (integral_candidate < -1500.0f) integral_candidate = -1500.0f;
+
+                // Sprawdź, czy wentylator jest przy limicie.
+                const int current_speed = id(internal_fan1_pwm).speed;
+                const float correction_candidate =
+                    kp * error + ki * integral_candidate;
+                int unconstrained_speed =
+                    (int) roundf(current_speed + correction_candidate);
+
+                const bool wants_above_max = unconstrained_speed > 100;
+                const bool wants_below_min = unconstrained_speed < 11;
+
+                // Anti-windup: nie powiększaj całki, gdy wyjście jest przy limicie,
+                // a błąd chce pchać wentylator dalej w tę samą stronę.
+                if (!((wants_above_max && error > 0.0f) ||
+                      (wants_below_min && error < 0.0f))) {
+                  id(flow_sync_integral) = integral_candidate;
+                }
+
+                // Korekta z aktualną (ograniczoną) całką.
+                const float correction =
+                    kp * error + ki * id(flow_sync_integral);
+
+                int next_speed = (int) roundf(current_speed + correction);
+
+                // Maksymalnie 3 punkty PWM co 5 s.
+                const int max_step = 3;
+
+                if (next_speed > current_speed + max_step) {
+                  next_speed = current_speed + max_step;
+                }
+                if (next_speed < current_speed - max_step) {
+                  next_speed = current_speed - max_step;
+                }
+
+                if (next_speed < 11) next_speed = 11;
+                if (next_speed > 100) next_speed = 100;
+
+                id(flow_sync_next_speed) = next_speed;
+
+            - if:
+                condition:
+                  lambda: 'return id(flow_sync_next_speed) == 0;'
+                then:
+                  - fan.turn_off: internal_fan1_pwm
+
+            - if:
+                condition:
+                  lambda: 'return id(flow_sync_next_speed) >= 11;'
+                then:
+                  - fan.turn_on:
+                      id: internal_fan1_pwm
+                      speed: !lambda 'return id(flow_sync_next_speed);'
+
+button:
+  - platform: restart
+    id: restart_rekuperatora
+    name: "Restart rekuperatora"
+    device_class: restart
+    entity_category: config
+    icon: mdi:restart
