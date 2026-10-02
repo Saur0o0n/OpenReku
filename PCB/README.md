@@ -10,13 +10,13 @@ Podgląd płytki bez zamontowanych elementów, z widocznymi padami i nadrukiem. 
 
 ## Otwieranie projektu
 
-Otwórz [OpenReku.kicad_pro](OpenReku.kicad_pro) w **KiCad 10**. Pakiet przygotowano i sprawdzono w KiCad 10.0.6. Potrzebne są standardowe biblioteki symboli, footprintów i — do podglądu 3D — modeli KiCad 10.
+Otwórz [OpenReku.kicad_pro](OpenReku.kicad_pro) w **KiCad 10**. Potrzebne są standardowe biblioteki symboli, footprintów i — do podglądu 3D — modeli KiCad 10.
 
 Zachowaj razem wszystkie pliki z tego katalogu i podkatalog `Rekuperator.pretty`. KiCad odnajduje lokalne biblioteki względem katalogu, w którym znajduje się `OpenReku.kicad_pro`. Dzięki temu projekt można sklonować do dowolnego miejsca na komputerze.
 
-W plikach `fp-lib-table` i `sym-lib-table` katalog projektu oznaczono zmienną KiCada `${KIPRJMOD}`. Jej wartość podstawia KiCad podczas otwierania projektu; GitHub nie rozwija tej zmiennej w README. Nie trzeba jej ręcznie zastępować ścieżką do katalogu.
+Tabele `fp-lib-table` i `sym-lib-table` korzystają ze zmiennej `${KIPRJMOD}`, którą KiCad rozwija do katalogu projektu.
 
-Historyczna nazwa biblioteki `Rekuperator` jest celowa: odwołują się do niej schemat i PCB. Nie należy zmieniać jej niezależnie od tych odwołań.
+Lokalne biblioteki mają nazwę `Rekuperator`, używaną w odwołaniach schematu i PCB.
 
 ## Zawartość katalogu
 
@@ -92,19 +92,19 @@ kicad-cli sch export bom \
 - Przeniesiono C5 i zarezerwowano miejsce dla dłuższego modułu ESP-32S 18 × 25,5 mm. Projekt elektryczny nadal wskazuje ESP32-WROOM-32U; zgodność innego modułu wymaga sprawdzenia jego padów i sposobu podłączenia anteny.
 - Zmieniono rozmieszczenie i routing oraz dodano logo OR + OpenReku na górnym nadruku.
 
-Źródła i oryginalne Gerbery wykonanej wersji **1.0** pozostają w historii Git, w commicie `764cad7`. Bieżący katalog zawiera wyłącznie rewizję 1.1, więc jej BOM-u i Gerberów nie należy łączyć z projektem 1.0.
+Źródła i Gerbery wersji **1.0** są dostępne w historii Git, w commicie `764cad7`. Bieżący katalog zawiera rewizję **1.1**.
 
-## Produkcja i sprawdzenie pakietu
+## Produkcja PCB
 
-Archiwum `OpenReku-v1.1-Gerber.zip` pochodzi z przygotowanego pakietu rewizji 1.1. Parametry płytki: **2 warstwy, FR-4 1,6 mm, miedź 35 µm / 1 oz, soldermaska obustronna, nadruk na górze**. Po zmianie projektu PCB trzeba ponownie wygenerować pliki produkcyjne; istniejący ZIP nie aktualizuje się automatycznie.
+Pliki do wykonania płytki znajdują się w [OpenReku-v1.1-Gerber.zip](OpenReku-v1.1-Gerber.zip). Parametry zamówienia:
 
-Przy aktualizacji repozytorium 2026-10-01 sprawdzono:
+- wymiary: **170 × 150 mm**;
+- **2 warstwy**, laminat **FR-4 1,6 mm**;
+- miedź **35 µm / 1 oz**;
+- soldermaska obustronna, nadruk na górze.
 
-- zgodność źródeł KiCada i zawartości ZIP-a z sumami SHA-256 pakietu 1.1 oraz integralność archiwum;
-- DRC ze sprawdzeniem zgodności schemat–PCB: **0 naruszeń, 0 niepołączonych elementów i 0 rozbieżności** przy regułach zapisanych w projekcie;
-- ERC: **0 błędów i 33 ostrzeżenia `endpoint_off_grid`** dotyczące końców połączeń poza siatką;
-- zgodność oznaczeń, wartości i footprintów wszystkich 93 elementów BOM-u z PCB.
+Po zmianie projektu PCB należy ponownie wygenerować Gerbery i pliki wierceń.
 
-Wyniki te dotyczą plików projektu, nie potwierdzają testów fizycznej płytki 1.1. Reguły DRC zachowują odstępy 8 mm między częścią sieciową i niskonapięciową oraz 3 mm między różnymi sieciami części sieciowej; kontrola programu nie zastępuje sprawdzenia montażu i izolacji gotowego urządzenia.
+Reguły DRC określają odstępy 8 mm między częścią sieciową i niskonapięciową oraz 3 mm między różnymi sieciami części sieciowej.
 
 Pliki lokalnych ustawień `*.kicad_prl`, blokady `*.lck`, autosave, kopie zapasowe i cache footprintów są pomijane przez główny [`.gitignore`](../.gitignore). Nie są potrzebne do odtworzenia projektu.
