@@ -1,0 +1,635 @@
+type: picture-elements
+image: /local/rekuperator2.jpg
+elements:
+  - type: state-label
+    entity: sensor.kotlownia_rekuperator_wywiew_temperatura
+    style:
+      top: 38.55%
+      left: 15.35%
+      transform: translate(-50%, -50%)
+      color: '#111111'
+      font-size: 20px
+      font-weight: 700
+      line-height: 1
+  - type: state-label
+    entity: sensor.kotlownia_rekuperator_wywiew_wilgotnosc
+    style:
+      top: 43.50%
+      left: 14.75%
+      transform: translate(-50%, -50%)
+      color: '#111111'
+      font-size: 20px
+      font-weight: 700
+      line-height: 1
+  - type: state-label
+    entity: sensor.kotlownia_rekuperator_wylot_rpm
+    style:
+      top: 11.55%
+      left: 55.00%
+      transform: translate(-50%, -50%)
+      color: '#111111'
+      font-size: 17px
+      font-weight: 700
+      line-height: 1
+  - type: state-label
+    entity: fan.kotlownia_rekuperator_wylot_pwm
+    attribute: percentage
+    suffix: '%'
+    style:
+      top: 15.05%
+      left: 55.00%
+      transform: translate(-50%, -50%)
+      color: '#111111'
+      font-size: 17px
+      font-weight: 700
+      line-height: 1
+  - type: state-label
+    entity: sensor.kotlownia_rekuperator_wylot_przeplyw_powietrza
+    style:
+      top: 18.75%
+      left: 55.00%
+      transform: translate(-50%, -50%)
+      color: '#111111'
+      font-size: 17px
+      font-weight: 700
+      line-height: 1
+  - type: state-label
+    entity: sensor.kotlownia_rekuperator_nawiew_temperatura
+    style:
+      top: 37.20%
+      left: 89.00%
+      transform: translate(-50%, -50%)
+      color: '#111111'
+      font-size: 20px
+      font-weight: 700
+      line-height: 1
+  - type: state-label
+    entity: sensor.kotlownia_rekuperator_nawiew_wilgotnosc
+    style:
+      top: 41.75%
+      left: 89.00%
+      transform: translate(-50%, -50%)
+      color: '#111111'
+      font-size: 20px
+      font-weight: 700
+      line-height: 1
+  - type: state-label
+    entity: sensor.kotlownia_rekuperator_czerpnia_temperatura
+    style:
+      top: 64.50%
+      left: 15.35%
+      transform: translate(-50%, -50%)
+      color: '#111111'
+      font-size: 20px
+      font-weight: 700
+      line-height: 1
+  - type: state-label
+    entity: sensor.kotlownia_rekuperator_czerpnia_wilgotnosc
+    style:
+      top: 69.30%
+      left: 14.75%
+      transform: translate(-50%, -50%)
+      color: '#111111'
+      font-size: 20px
+      font-weight: 700
+      line-height: 1
+  - type: state-label
+    entity: sensor.kotlownia_rekuperator_wlot_rpm
+    style:
+      top: 88.00%
+      left: 54.10%
+      transform: translate(-50%, -50%)
+      color: '#111111'
+      font-size: 17px
+      font-weight: 700
+      line-height: 1
+  - type: state-label
+    entity: fan.kotlownia_rekuperator_wlot_pwm
+    attribute: percentage
+    suffix: '%'
+    style:
+      top: 91.30%
+      left: 54.10%
+      transform: translate(-50%, -50%)
+      color: '#111111'
+      font-size: 17px
+      font-weight: 700
+      line-height: 1
+  - type: state-label
+    entity: sensor.kotlownia_rekuperator_wlot_przeplyw_powietrza
+    style:
+      top: 94.70%
+      left: 54.60%
+      transform: translate(-50%, -50%)
+      color: '#111111'
+      font-size: 17px
+      font-weight: 700
+      line-height: 1
+  - type: state-label
+    entity: sensor.kotlownia_rekuperator_wyrzutnia_temperatura
+    style:
+      top: 65.05%
+      left: 89.00%
+      transform: translate(-50%, -50%)
+      color: '#111111'
+      font-size: 20px
+      font-weight: 700
+      line-height: 1
+  - type: state-label
+    entity: sensor.kotlownia_rekuperator_wyrzutnia_wilgotnosc
+    style:
+      top: 69.80%
+      left: 89.00%
+      transform: translate(-50%, -50%)
+      color: '#111111'
+      font-size: 20px
+      font-weight: 700
+      line-height: 1
+  - type: state-label
+    entity: valve.kotlownia_rekuperator_by_pass
+    tap_action:
+      action: more-info
+    style:
+      top: 33.20%
+      left: 46.50%
+      transform: translate(-50%, -50%)
+      color: '#111111'
+      font-size: 18px
+      font-weight: 700
+      line-height: 1
+  - type: state-label
+    entity: sensor.kotlownia_shellypmminig3_rekuperator_power
+    prefix: 'Pobór: '
+    style:
+      top: 4.60%
+      left: 87.80%
+      transform: translate(-50%, -50%)
+      color: '#263238'
+      font-size: 16px
+      font-weight: 700
+      line-height: 1
+  - type: state-icon
+    entity: switch.kotlownia_rekuperator_zasilanie_rekuperatora
+    icon: mdi:power
+    state_color: true
+    tap_action:
+      action: more-info
+    style:
+      top: 4.60%
+      left: 94.80%
+      --mdc-icon-size: 33px
+      --state-switch-on-color: '#43A047'
+      --state-switch-off-color: '#F57C00'
+      # Przycisk zasilania pozostaje nad nakładką blokującą kartę.
+      z-index: 20
+  - type: custom:hui-element
+    card_type: custom:gauge-card-pro
+    entity: fan.kotlownia_rekuperator_wylot_pwm
+    attribute: percentage
+    min: 0
+    max: 100
+    needle: true
+    needle_color: '#263238'
+    hide_background: true
+    value: |-
+      {% if is_state(entity, 'on') %}
+        {{ state_attr(entity, 'percentage') | int(0) }}
+      {% else %}
+        0
+      {% endif %}
+    segments:
+      - from: 0
+        color: '#F57C00'
+    titles:
+      primary: PWM Wylot
+      primary_color: '#263238'
+      primary_font_size: 13px
+    value_texts:
+      primary_color: '#263238'
+      primary_unit: '%'
+    style:
+      top: 13.50%
+      left: 33.00%
+      width: 145px
+      transform: translate(-50%, -50%)
+  - type: custom:hui-element
+    card_type: custom:gauge-card-pro
+    entity: number.kotlownia_rekuperator_korekta_bilansu_wlot_wylot
+    min: -50
+    max: 350
+    needle: true
+    needle_color: '#263238'
+    hide_background: true
+    decimals: 0
+    segments:
+      - from: -50
+        color: '#7E57C2'
+    titles:
+      primary: Korekta bilansu
+      primary_color: '#263238'
+      primary_font_size: 11px
+      secondary: Wlot / Wylot
+      secondary_color: '#455A64'
+      secondary_font_size: 10px
+    value_texts:
+      primary_color: '#263238'
+      primary_unit: m³/h
+    style:
+      top: 13.50%
+      left: 68.25%
+      width: 145px
+      transform: translate(-50%, -50%)
+  - type: custom:hui-element
+    card_type: custom:gauge-card-pro
+    entity: fan.kotlownia_rekuperator_wlot_pwm
+    attribute: percentage
+    min: 0
+    max: 100
+    needle: true
+    needle_color: '#263238'
+    hide_background: true
+    value: |-
+      {% if is_state(entity, 'on') %}
+        {{ state_attr(entity, 'percentage') | int(0) }}
+      {% else %}
+        0
+      {% endif %}
+    segments:
+      - from: 0
+        color: '#1E88E5'
+    titles:
+      primary: PWM Wlot
+      primary_color: '#263238'
+      primary_font_size: 13px
+    value_texts:
+      primary_color: '#263238'
+      primary_unit: '%'
+    style:
+      top: 91.00%
+      left: 33.00%
+      width: 145px
+      transform: translate(-50%, -50%)
+  - type: state-label
+    entity: select.kotlownia_rekuperator_synchronizacja_wentylatorow
+    prefix: 'Synchronizacja: '
+    style:
+      top: 85.20%
+      left: 84.00%
+      transform: translate(-50%, -50%)
+      color: '#263238'
+      font-size: 14px
+      font-weight: 700
+      line-height: 1
+  - type: icon
+    entity: select.kotlownia_rekuperator_synchronizacja_wentylatorow
+    icon: mdi:sync-off
+    title: Brak synchronizacji wentylatorów
+    tap_action:
+      action: perform-action
+      perform_action: select.select_option
+      target:
+        entity_id: select.kotlownia_rekuperator_synchronizacja_wentylatorow
+      data:
+        option: Brak
+    hold_action:
+      action: more-info
+    style:
+      top: 91.00%
+      left: 76.50%
+      color: '#78909C'
+      --mdc-icon-size: 32px
+  - type: conditional
+    conditions:
+      - entity: select.kotlownia_rekuperator_synchronizacja_wentylatorow
+        state: Brak
+    elements:
+      - type: icon
+        entity: select.kotlownia_rekuperator_synchronizacja_wentylatorow
+        icon: mdi:sync-off
+        title: Brak synchronizacji wentylatorów — aktywne
+        tap_action:
+          action: perform-action
+          perform_action: select.select_option
+          target:
+            entity_id: select.kotlownia_rekuperator_synchronizacja_wentylatorow
+          data:
+            option: Brak
+        hold_action:
+          action: more-info
+        style:
+          top: 91.00%
+          left: 76.50%
+          color: '#43A047'
+          --mdc-icon-size: 36px
+  - type: icon
+    entity: select.kotlownia_rekuperator_synchronizacja_wentylatorow
+    icon: mdi:cog-sync
+    title: Synchronizacja według mocy PWM
+    tap_action:
+      action: perform-action
+      perform_action: select.select_option
+      target:
+        entity_id: select.kotlownia_rekuperator_synchronizacja_wentylatorow
+      data:
+        option: Moc PWM
+    hold_action:
+      action: more-info
+    style:
+      top: 91.00%
+      left: 84.00%
+      color: '#78909C'
+      --mdc-icon-size: 32px
+  - type: conditional
+    conditions:
+      - entity: select.kotlownia_rekuperator_synchronizacja_wentylatorow
+        state: Moc PWM
+    elements:
+      - type: icon
+        entity: select.kotlownia_rekuperator_synchronizacja_wentylatorow
+        icon: mdi:cog-sync
+        title: Synchronizacja według mocy PWM — aktywne
+        tap_action:
+          action: perform-action
+          perform_action: select.select_option
+          target:
+            entity_id: select.kotlownia_rekuperator_synchronizacja_wentylatorow
+          data:
+            option: Moc PWM
+        hold_action:
+          action: more-info
+        style:
+          top: 91.00%
+          left: 84.00%
+          color: '#FF9800'
+          --mdc-icon-size: 36px
+  - type: icon
+    entity: select.kotlownia_rekuperator_synchronizacja_wentylatorow
+    icon: mdi:weather-windy
+    title: Synchronizacja według przepływu powietrza
+    tap_action:
+      action: perform-action
+      perform_action: select.select_option
+      target:
+        entity_id: select.kotlownia_rekuperator_synchronizacja_wentylatorow
+      data:
+        option: Przepływ powietrza
+    hold_action:
+      action: more-info
+    style:
+      top: 91.00%
+      left: 91.50%
+      color: '#78909C'
+      --mdc-icon-size: 32px
+  - type: conditional
+    conditions:
+      - entity: select.kotlownia_rekuperator_synchronizacja_wentylatorow
+        state: Przepływ powietrza
+    elements:
+      - type: icon
+        entity: select.kotlownia_rekuperator_synchronizacja_wentylatorow
+        icon: mdi:weather-windy
+        title: Synchronizacja według przepływu powietrza — aktywne
+        tap_action:
+          action: perform-action
+          perform_action: select.select_option
+          target:
+            entity_id: select.kotlownia_rekuperator_synchronizacja_wentylatorow
+          data:
+            option: Przepływ powietrza
+        hold_action:
+          action: more-info
+        style:
+          top: 91.00%
+          left: 91.50%
+          color: '#2196F3'
+          --mdc-icon-size: 36px
+  # Wybór trybu bypassu; opcje zgodne z aktualnym ESPHome.
+  - type: state-label
+    entity: select.kotlownia_rekuperator_tryb_sterowania_bypassem
+    prefix: 'Bypass: '
+    tap_action:
+      action: more-info
+    style:
+      top: 11.70%
+      left: 86.00%
+      width: 23%
+      transform: translate(-50%, -50%)
+      color: '#263238'
+      font-size: 13px
+      font-weight: 700
+      line-height: '1.2'
+      white-space: normal
+      text-align: center
+  - type: icon
+    entity: select.kotlownia_rekuperator_tryb_sterowania_bypassem
+    icon: mdi:hand-back-right
+    title: Ręczne sterowanie
+    tap_action:
+      action: perform-action
+      perform_action: select.select_option
+      target:
+        entity_id: select.kotlownia_rekuperator_tryb_sterowania_bypassem
+      data:
+        option: Ręczne sterowanie
+    hold_action:
+      action: more-info
+    style:
+      top: 18.50%
+      left: 79.00%
+      color: '#78909C'
+      --mdc-icon-size: 32px
+  - type: conditional
+    conditions:
+    - entity: select.kotlownia_rekuperator_tryb_sterowania_bypassem
+      state: Ręczne sterowanie
+    elements:
+    - type: icon
+      entity: select.kotlownia_rekuperator_tryb_sterowania_bypassem
+      icon: mdi:hand-back-right
+      title: Ręczne sterowanie — aktywne
+      tap_action:
+        action: perform-action
+        perform_action: select.select_option
+        target:
+          entity_id: select.kotlownia_rekuperator_tryb_sterowania_bypassem
+        data:
+          option: Ręczne sterowanie
+      hold_action:
+        action: more-info
+      style:
+        top: 18.50%
+        left: 79.00%
+        color: '#43A047'
+        --mdc-icon-size: 36px
+  - type: icon
+    entity: select.kotlownia_rekuperator_tryb_sterowania_bypassem
+    icon: mdi:fire
+    title: Automatyczne grzanie
+    tap_action:
+      action: perform-action
+      perform_action: select.select_option
+      target:
+        entity_id: select.kotlownia_rekuperator_tryb_sterowania_bypassem
+      data:
+        option: Automatyczne grzanie
+    hold_action:
+      action: more-info
+    style:
+      top: 18.50%
+      left: 86.00%
+      color: '#78909C'
+      --mdc-icon-size: 32px
+  - type: conditional
+    conditions:
+    - entity: select.kotlownia_rekuperator_tryb_sterowania_bypassem
+      state: Automatyczne grzanie
+    elements:
+    - type: icon
+      entity: select.kotlownia_rekuperator_tryb_sterowania_bypassem
+      icon: mdi:fire
+      title: Automatyczne grzanie — aktywne
+      tap_action:
+        action: perform-action
+        perform_action: select.select_option
+        target:
+          entity_id: select.kotlownia_rekuperator_tryb_sterowania_bypassem
+        data:
+          option: Automatyczne grzanie
+      hold_action:
+        action: more-info
+      style:
+        top: 18.50%
+        left: 86.00%
+        color: '#FF9800'
+        --mdc-icon-size: 36px
+  - type: icon
+    entity: select.kotlownia_rekuperator_tryb_sterowania_bypassem
+    icon: mdi:snowflake
+    title: Automatyczne chłodzenie
+    tap_action:
+      action: perform-action
+      perform_action: select.select_option
+      target:
+        entity_id: select.kotlownia_rekuperator_tryb_sterowania_bypassem
+      data:
+        option: Automatyczne chłodzenie
+    hold_action:
+      action: more-info
+    style:
+      top: 18.50%
+      left: 93.00%
+      color: '#78909C'
+      --mdc-icon-size: 32px
+  - type: conditional
+    conditions:
+    - entity: select.kotlownia_rekuperator_tryb_sterowania_bypassem
+      state: Automatyczne chłodzenie
+    elements:
+    - type: icon
+      entity: select.kotlownia_rekuperator_tryb_sterowania_bypassem
+      icon: mdi:snowflake
+      title: Automatyczne chłodzenie — aktywne
+      tap_action:
+        action: perform-action
+        perform_action: select.select_option
+        target:
+          entity_id: select.kotlownia_rekuperator_tryb_sterowania_bypassem
+        data:
+          option: Automatyczne chłodzenie
+      hold_action:
+        action: more-info
+      style:
+        top: 18.50%
+        left: 93.00%
+        color: '#2196F3'
+        --mdc-icon-size: 36px
+  # Jedna nakładka przygasza kartę i blokuje dotyk po wyłączeniu zasilania.
+  # Przycisk zasilania ma wyższy z-index, więc pozostaje dostępny.
+  - type: conditional
+    conditions:
+      - entity: switch.kotlownia_rekuperator_zasilanie_rekuperatora
+        state: 'off'
+      - entity: binary_sensor.kotlownia_rekuperator_tryb_serwisowy
+        state_not: 'on'
+    elements:
+      # Obraz przechwytuje dotyk bez kierowania go do pobliskich kontrolek.
+      - type: image
+        image: 'data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%221%22%20height=%221%22%3E%3C/svg%3E'
+        filter: none
+        title: Zasilanie rekuperatora wyłączone
+        tap_action:
+          action: none
+        hold_action:
+          action: none
+        double_tap_action:
+          action: none
+        style:
+          top: 0
+          left: 0
+          width: 100%
+          height: 100%
+          transform: none
+          padding: 0
+          box-sizing: border-box
+          overflow: hidden
+          z-index: 10
+          background: 'rgba(180, 180, 180, 0.55)'
+          backdrop-filter: grayscale(100%)
+          -webkit-backdrop-filter: grayscale(100%)
+          color: transparent
+          font-size: 0
+          pointer-events: auto
+          cursor: default
+  # Serwis blokuje całą kartę, zachowując widoczne odczyty i część kolorów.
+  - type: conditional
+    conditions:
+      - entity: binary_sensor.kotlownia_rekuperator_tryb_serwisowy
+        state: 'on'
+    elements:
+      # Obraz przechwytuje dotyk bez kierowania go do pobliskich kontrolek.
+      - type: image
+        image: 'data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%221%22%20height=%221%22%3E%3C/svg%3E'
+        filter: none
+        title: Tryb serwisowy rekuperatora. Sterowanie jest zablokowane.
+        tap_action:
+          action: none
+        hold_action:
+          action: none
+        double_tap_action:
+          action: none
+        style:
+          top: 0
+          left: 0
+          width: 100%
+          height: 100%
+          transform: none
+          padding: 0
+          box-sizing: border-box
+          overflow: hidden
+          z-index: 30
+          background: 'rgba(180, 180, 180, 0.12)'
+          backdrop-filter: saturate(65%)
+          -webkit-backdrop-filter: saturate(65%)
+          color: transparent
+          font-size: 0
+          pointer-events: auto
+          cursor: not-allowed
+      # Stały tekst bez stanu sensora; hui-element jest już używany przez wskaźniki.
+      - type: custom:hui-element
+        card_type: markdown
+        content: '**Tryb serwisowy rekuperatora.**'
+        style:
+          top: 50%
+          left: 50%
+          transform: translate(-50%, -50%)
+          width: 70%
+          max-width: 460px
+          z-index: 31
+          text-align: center
+          font-size: clamp(16px, 2.5vw, 24px)
+          --ha-card-background: 'rgba(245, 245, 245, 0.95)'
+          --primary-text-color: '#263238'
+          --ha-card-border-width: 0px
+          pointer-events: none
+grid_options:
+  columns: full
