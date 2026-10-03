@@ -21,6 +21,6 @@ Opis plików i instrukcję otwarcia projektu elektroniki zawiera [PCB/README.md]
 
 Projekt PCB, dokumentacja i własne grafiki są udostępnione na licencji [CC BY-NC 4.0](LICENSES/CC-BY-NC-4.0.txt), a kod i konfiguracje YAML ESPHome oraz Home Assistant — na [PolyForm Noncommercial 1.0.0](LICENSES/PolyForm-Noncommercial-1.0.0.txt).
 
-Możesz je kopiować, modyfikować i udostępniać do celów niekomercyjnych, na warunkach odpowiedniej licencji. Przy udostępnianiu zachowaj informację o autorze **Saur0o0n**, nazwie **OpenReku**, [źródle projektu](https://github.com/Saur0o0n/OpenReku) i licencji; dla materiałów CC BY-NC oznacz również wprowadzone zmiany. Kod zawiera obowiązkową informację `Required Notice:`.
+Możesz je kopiować, modyfikować i udostępniać do celów niekomercyjnych, na warunkach odpowiedniej licencji. Przy udostępnianiu zachowaj informację o autorze **Sauron**, nazwie **OpenReku**, [źródle projektu](https://github.com/Saur0o0n/OpenReku) i licencji; dla materiałów CC BY-NC oznacz również wprowadzone zmiany. Kod zawiera obowiązkową informację `Required Notice:`.
 
 Zakres licencji i wyłączenia dotyczące cudzych materiałów określa [LICENSE](LICENSE). Wykorzystanie komercyjne wykraczające poza udzielone licencje wymaga osobnej zgody właścicieli praw.
