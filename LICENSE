@@ -1,0 +1,49 @@
+OpenReku licensing
+==================
+
+Copyright 2026 Saur0o0n
+Project and source: https://github.com/Saur0o0n/OpenReku
+
+The following licenses apply to the original contributions of the OpenReku
+copyright holder. They apply to different materials, not as a choice between
+licenses for the same material.
+
+1. Software and configuration
+
+YAML files (*.yaml, *.yml and *.yaml.example) in ESPHome/ and HomeAssistant/,
+including embedded C++ lambdas and JavaScript, are licensed under the PolyForm
+Noncommercial License 1.0.0.
+
+Full terms: LICENSES/PolyForm-Noncommercial-1.0.0.txt
+Canonical URL: https://polyformproject.org/licenses/noncommercial/1.0.0
+
+Required Notice: Copyright 2026 Saur0o0n — OpenReku (https://github.com/Saur0o0n/OpenReku)
+
+When distributing any part of this software, provide the license text or its
+canonical URL and preserve the Required Notice above, as required by the
+license. The same notice is included in NOTICE and in YAML file comments.
+
+2. Hardware design, documentation and graphics
+
+The remaining original project materials, including the PCB design and
+production files, BOM, documentation and original graphics, are licensed under
+Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0).
+
+Full terms: LICENSES/CC-BY-NC-4.0.txt
+Canonical URL: https://creativecommons.org/licenses/by-nc/4.0/
+
+For attribution, identify Saur0o0n and OpenReku, link to the project and license,
+and indicate any changes when sharing the material, as required by the license.
+
+3. Third-party materials
+
+Third-party materials and dependencies retain their own licenses and notices.
+The licenses above do not relicense third-party KiCad symbols or footprints,
+external software, or third-party elements of images and screenshots (including
+the Home Assistant card background). No ownership of those elements is claimed.
+Original license texts in LICENSES/ are reproduced without modification and are
+not relicensed under the project licenses.
+
+The full license texts govern the permissions and conditions for each scope.
+Commercial use not permitted by the applicable license requires separate
+permission from the relevant rights holders.
