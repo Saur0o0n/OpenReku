@@ -1,0 +1,88 @@
+# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+# Required Notice: Copyright 2026 Sauron — OpenReku (https://github.com/Saur0o0n/OpenReku)
+# License: https://polyformproject.org/licenses/noncommercial/1.0.0
+
+# Zawartość do włączenia pod kluczem template: w konfiguracji Home Assistant.
+# Osobny plik: template: !include rekuperator_sprawnosc_template.yaml
+# Jeśli template: już istnieje, dołącz tę listę do jego obecnej konfiguracji.
+# Obliczenia po stronie nawiewu, bez ograniczania wyniku do 0–100%.
+# Progi 2°C i 0,5 g/kg są robocze, nie są normą ani kalibracją czujników.
+# Bypass nie jest filtrowany: wynik pokazuje także realny spadek odzysku po otwarciu.
+# Gdy któryś wentylator stoi lub RPM jest nieznane, wynik jest niedostępny.
+- sensor:
+  - name: Rekuperator sprawnosc temperaturowa
+    unique_id: openreku_ha_temperaturowa_recovery_v1
+    default_entity_id: sensor.rekuperator_sprawnosc_temperaturowa
+    unit_of_measurement: '%'
+    state_class: measurement
+    icon: mdi:heat-exchanger
+    availability: |-
+      {% set outside = states('sensor.kotlownia_rekuperator_czerpnia_temperatura') %}
+      {% set supply = states('sensor.kotlownia_rekuperator_nawiew_temperatura') %}
+      {% set extract = states('sensor.kotlownia_rekuperator_wywiew_temperatura') %}
+      {% set rpm_in = states('sensor.kotlownia_rekuperator_wlot_rpm') %}
+      {% set rpm_out = states('sensor.kotlownia_rekuperator_wylot_rpm') %}
+      {{ is_state('switch.kotlownia_rekuperator_zasilanie_rekuperatora', 'on')
+         and is_state('binary_sensor.kotlownia_rekuperator_tryb_serwisowy', 'off')
+         and is_number(rpm_in) and is_number(rpm_out)
+         and (rpm_in | float(0)) > 0 and (rpm_out | float(0)) > 0
+         and is_number(outside) and is_number(supply) and is_number(extract)
+         and (((extract | float(0)) - (outside | float(0))) | abs) >= 2.0 }}
+    state: |-
+      {% set outside = states('sensor.kotlownia_rekuperator_czerpnia_temperatura') %}
+      {% set supply = states('sensor.kotlownia_rekuperator_nawiew_temperatura') %}
+      {% set extract = states('sensor.kotlownia_rekuperator_wywiew_temperatura') %}
+      {% set rpm_in = states('sensor.kotlownia_rekuperator_wlot_rpm') %}
+      {% set rpm_out = states('sensor.kotlownia_rekuperator_wylot_rpm') %}
+      {% if is_state('switch.kotlownia_rekuperator_zasilanie_rekuperatora', 'on')
+         and is_state('binary_sensor.kotlownia_rekuperator_tryb_serwisowy', 'off')
+         and is_number(rpm_in) and is_number(rpm_out)
+         and (rpm_in | float(0)) > 0 and (rpm_out | float(0)) > 0
+         and is_number(outside) and is_number(supply) and is_number(extract)
+         and (((extract | float(0)) - (outside | float(0))) | abs) >= 2.0 %}
+        {{ (100 * ((supply | float) - (outside | float)) / ((extract | float) - (outside | float))) | round(1) }}
+      {% else %}
+        {{ none }}
+      {% endif %}
+    attributes:
+      minimalna_roznica_wejsciowa: 2.0
+      jednostka_roznicy: °C
+      strona_pomiaru: nawiew
+  - name: Rekuperator odzysk wilgoci
+    unique_id: openreku_ha_wilgoci_recovery_v1
+    default_entity_id: sensor.rekuperator_odzysk_wilgoci
+    unit_of_measurement: '%'
+    state_class: measurement
+    icon: mdi:water-percent
+    availability: |-
+      {% set outside = states('sensor.kotlownia_rekuperator_czerpnia_wilgotnosc_bezwzgledna') %}
+      {% set supply = states('sensor.kotlownia_rekuperator_nawiew_wilgotnosc_bezwzgledna') %}
+      {% set extract = states('sensor.kotlownia_rekuperator_wywiew_wilgotnosc_bezwzgledna') %}
+      {% set rpm_in = states('sensor.kotlownia_rekuperator_wlot_rpm') %}
+      {% set rpm_out = states('sensor.kotlownia_rekuperator_wylot_rpm') %}
+      {{ is_state('switch.kotlownia_rekuperator_zasilanie_rekuperatora', 'on')
+         and is_state('binary_sensor.kotlownia_rekuperator_tryb_serwisowy', 'off')
+         and is_number(rpm_in) and is_number(rpm_out)
+         and (rpm_in | float(0)) > 0 and (rpm_out | float(0)) > 0
+         and is_number(outside) and is_number(supply) and is_number(extract)
+         and (((extract | float(0)) - (outside | float(0))) | abs) >= 0.5 }}
+    state: |-
+      {% set outside = states('sensor.kotlownia_rekuperator_czerpnia_wilgotnosc_bezwzgledna') %}
+      {% set supply = states('sensor.kotlownia_rekuperator_nawiew_wilgotnosc_bezwzgledna') %}
+      {% set extract = states('sensor.kotlownia_rekuperator_wywiew_wilgotnosc_bezwzgledna') %}
+      {% set rpm_in = states('sensor.kotlownia_rekuperator_wlot_rpm') %}
+      {% set rpm_out = states('sensor.kotlownia_rekuperator_wylot_rpm') %}
+      {% if is_state('switch.kotlownia_rekuperator_zasilanie_rekuperatora', 'on')
+         and is_state('binary_sensor.kotlownia_rekuperator_tryb_serwisowy', 'off')
+         and is_number(rpm_in) and is_number(rpm_out)
+         and (rpm_in | float(0)) > 0 and (rpm_out | float(0)) > 0
+         and is_number(outside) and is_number(supply) and is_number(extract)
+         and (((extract | float(0)) - (outside | float(0))) | abs) >= 0.5 %}
+        {{ (100 * ((supply | float) - (outside | float)) / ((extract | float) - (outside | float))) | round(1) }}
+      {% else %}
+        {{ none }}
+      {% endif %}
+    attributes:
+      minimalna_roznica_wejsciowa: 0.5
+      jednostka_roznicy: g/kg
+      strona_pomiaru: nawiew

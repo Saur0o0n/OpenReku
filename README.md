@@ -14,7 +14,7 @@ OpenReku steruje wentylacją nawiewno-wywiewną i udostępnia nastawy oraz pomia
 - **Regulacja dwóch wentylatorów** — niezależne ustawianie wydajności nawiewu i wywiewu albo praca zsynchronizowana. Tryb „Moc PWM” ustawia obu wentylatorom jednakowy procent wysterowania. Tryb „Przepływ powietrza” dostosowuje wywiew do zmierzonego przepływu nawiewu, dzięki czemu uwzględnia różnice oporów obu torów powietrza.
 - **Korekta bilansu nawiew–wywiew** — w trybie synchronizacji przepływu można ustawić żądaną różnicę w m³/h. Dodatnia korekta oznacza przewagę nawiewu; regulator uzyskuje ją przez zmniejszenie wywiewu rekuperatora. Dołączona automatyzacja Home Assistant zmienia korektę podczas pracy wyciągu kuchennego.
 - **Ręczny lub automatyczny bypass** — tryby „Automatyczne grzanie” i „Automatyczne chłodzenie” porównują temperaturę powietrza z czerpni z temperaturą wywiewaną z domu. Bypass otwiera się, gdy powietrze zewnętrzne sprzyja wybranemu celowi, a zamyka, gdy korzystniejszy jest odzysk ciepła lub chłodu. Histereza i czas potwierdzenia warunku ograniczają częste przełączanie.
-- **Podgląd parametrów pracy** — temperatury i wilgotności w czterech punktach: czerpni, nawiewie, wywiewie i wyrzutni, a także obroty obu wentylatorów i przepływy powietrza, zależnie od wyposażenia.
+- **Podgląd parametrów pracy** — temperatury i wilgotności w czterech punktach: czerpni, nawiewie, wywiewie i wyrzutni, a także obroty obu wentylatorów i przepływy powietrza, zależnie od wyposażenia. Zawartość wilgoci jest również obliczana w g/kg suchego powietrza. Karty Home Assistant udostępniają wykresy z zakładkami oraz wyliczaną po stronie HA sprawność temperaturową i odzysk wilgoci.
 - **Test do obserwacji zużycia filtrów** — sterownik zamyka bypass, ustawia stałe wysterowanie wentylatorów i po ustabilizowaniu pracy uśrednia przepływ oraz obroty. Wyniki odniesione do nastawy PWM pozwalają porównywać kolejne pomiary; ostatni wynik jest zachowywany po restarcie. Na czas testu blokowane są zmiany nastaw, a po zakończeniu przywracane wcześniejsze ustawienia. Harmonogram zapewnia automatyzacja Home Assistant. Test dostarcza danych do oceny zmian, bez automatycznego alarmu wymiany filtra.
 
 
@@ -42,7 +42,7 @@ Zamieszczony YAML odpowiada pełnemu zestawowi w instalacji autora. Warianty upr
 | --- | --- |
 | [PCB/](PCB/) | Projekt płytki w wersji 1.1: schematy i PCB KiCad, lokalne biblioteki, lista elementów BOM, Gerbery do produkcji. |
 | [ESPHome/](ESPHome/) | Konfiguracja `rekuperator.yaml` z obsługą urządzenia i integracją z Home Assistant oraz wzór `secrets.yaml.example` do uzupełnienia własnymi danymi dostępowymi. |
-| [HomeAssistant/](HomeAssistant/) | Karta panelu Home Assistant, automatyzacje testu filtrów i korekty bilansu oraz podkład graficzny karty. |
+| [HomeAssistant/](HomeAssistant/) | Karta sterowania i wykresy Home Assistant, sensory sprawności, automatyzacje testu filtrów i korekty bilansu oraz podkład graficzny karty. |
 | [Venturi/](Venturi/) | Model zwężki Venturiego do pomiaru przepływu powietrza: projekt FreeCAD i eksporty STEP obu części. |
 
 Opis plików i instrukcję otwarcia projektu elektroniki zawiera [PCB/README.md](PCB/README.md). Przygotowanie konfiguracji i pliku sekretów opisano w [ESPHome/README.md](ESPHome/README.md). Sposób dodania karty do panelu opisano w [HomeAssistant/README.md](HomeAssistant/README.md).

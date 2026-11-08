@@ -1,0 +1,120 @@
+# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+# Required Notice: Copyright 2026 Sauron — OpenReku (https://github.com/Saur0o0n/OpenReku)
+# License: https://polyformproject.org/licenses/noncommercial/1.0.0
+
+# Wymaga Tabbed Card i ApexCharts Card. Zakładki bez helpera.
+type: custom:tabbed-card
+options:
+  defaultTabIndex: 0
+styles:
+  --mdc-typography-button-text-transform: none
+tabs:
+- attributes:
+    label: Temperatury
+  card:
+    type: custom:apexcharts-card
+    header:
+      show: true
+      title: ''
+      show_states: true
+      colorize_states: true
+    graph_span: 12h
+    update_interval: 5min
+    now:
+      show: true
+      label: Teraz
+    apex_config:
+      chart:
+        height: 288px
+      stroke:
+        curve: smooth
+        width: 2.5
+      legend:
+        position: bottom
+      tooltip:
+        shared: true
+        intersect: false
+      yaxis:
+        decimalsInFloat: 1
+        title:
+          text: °C
+    all_series_config:
+      type: line
+      float_precision: 1
+      group_by:
+        duration: 5min
+        func: avg
+    series:
+    - entity: sensor.kotlownia_rekuperator_czerpnia_temperatura
+      name: Czerpnia
+      color: '#2196F3'
+    - entity: sensor.kotlownia_rekuperator_nawiew_temperatura
+      name: Nawiew
+      color: '#FFC107'
+    - entity: sensor.kotlownia_rekuperator_wywiew_temperatura
+      name: Wywiew
+      color: '#FF9800'
+    - entity: sensor.kotlownia_rekuperator_wyrzutnia_temperatura
+      name: Wyrzutnia
+      color: '#F44336'
+- attributes:
+    label: Sprawność
+  card:
+    type: custom:apexcharts-card
+    header:
+      show: true
+      title: ''
+      show_states: true
+      colorize_states: true
+    graph_span: 24h
+    update_interval: 1min
+    apex_config:
+      chart:
+        height: 288px
+      stroke:
+        curve: straight
+        width: 2.5
+      legend:
+        position: bottom
+      tooltip:
+        shared: true
+        intersect: false
+    all_series_config:
+      type: line
+      float_precision: 1
+      fill_raw: 'null'
+      extend_to: false
+      group_by:
+        duration: 5min
+        func: avg
+        fill: 'null'
+    yaxis:
+    - id: efficiency
+      min: ~0
+      max: ~100
+      decimals: 0
+      apex_config:
+        title:
+          text: Odzysk (%)
+    - id: temperature
+      opposite: true
+      decimals: 1
+      apex_config:
+        title:
+          text: Czerpnia (°C)
+    series:
+    - entity: sensor.rekuperator_sprawnosc_temperaturowa
+      name: Temperatura
+      color: '#FF9800'
+      yaxis_id: efficiency
+      unit: '%'
+    - entity: sensor.rekuperator_odzysk_wilgoci
+      name: Wilgoć
+      color: '#66BB6A'
+      yaxis_id: efficiency
+      unit: '%'
+    - entity: sensor.kotlownia_rekuperator_czerpnia_temperatura
+      name: Czerpnia
+      color: '#2196F3'
+      yaxis_id: temperature
+      unit: °C

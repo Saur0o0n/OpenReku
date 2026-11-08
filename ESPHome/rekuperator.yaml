@@ -318,6 +318,92 @@ sensor:
       name: "Wywiew - Wilgotność"
       id: wywiew_hum
 
+  # Water vapour in g/kg of dry air (humidity ratio), not g/m³.
+  # Uses the existing assumed atmospheric pressure; no HA device_class.
+  - platform: template
+    name: "Czerpnia - Wilgotnosc bezwzględna"
+    id: czerpnia_hum_abs
+    unit_of_measurement: "g/kg"
+    state_class: measurement
+    accuracy_decimals: 2
+    icon: mdi:water-percent
+    update_interval: 30s
+    lambda: |-
+      const float t = id(czerpnia_temp).state;
+      const float rh = id(czerpnia_hum).state;
+      const float pressure = ${air_pressure_pa};
+      if (!std::isfinite(t) || !std::isfinite(rh) ||
+          t <= -243.5f || rh < 0.0f || rh > 100.0f) return NAN;
+      // Saturation vapour pressure over liquid water (Pa), then actual vapour pressure.
+      const float vapour_pressure = (rh / 100.0f) * 611.2f *
+          expf((17.67f * t) / (t + 243.5f));
+      if (!std::isfinite(vapour_pressure) || !std::isfinite(pressure) ||
+          pressure <= vapour_pressure) return NAN;
+      return 621.98f * vapour_pressure / (pressure - vapour_pressure);
+
+  - platform: template
+    name: "Wyrzutnia - Wilgotnosc bezwzględna"
+    id: wyrzutnia_hum_abs
+    unit_of_measurement: "g/kg"
+    state_class: measurement
+    accuracy_decimals: 2
+    icon: mdi:water-percent
+    update_interval: 30s
+    lambda: |-
+      const float t = id(wyrzutnia_temp).state;
+      const float rh = id(wyrzutnia_hum).state;
+      const float pressure = ${air_pressure_pa};
+      if (!std::isfinite(t) || !std::isfinite(rh) ||
+          t <= -243.5f || rh < 0.0f || rh > 100.0f) return NAN;
+      // Saturation vapour pressure over liquid water (Pa), then actual vapour pressure.
+      const float vapour_pressure = (rh / 100.0f) * 611.2f *
+          expf((17.67f * t) / (t + 243.5f));
+      if (!std::isfinite(vapour_pressure) || !std::isfinite(pressure) ||
+          pressure <= vapour_pressure) return NAN;
+      return 621.98f * vapour_pressure / (pressure - vapour_pressure);
+
+  - platform: template
+    name: "Nawiew - Wilgotnosc bezwzględna"
+    id: nawiew_hum_abs
+    unit_of_measurement: "g/kg"
+    state_class: measurement
+    accuracy_decimals: 2
+    icon: mdi:water-percent
+    update_interval: 30s
+    lambda: |-
+      const float t = id(nawiew_temp).state;
+      const float rh = id(nawiew_hum).state;
+      const float pressure = ${air_pressure_pa};
+      if (!std::isfinite(t) || !std::isfinite(rh) ||
+          t <= -243.5f || rh < 0.0f || rh > 100.0f) return NAN;
+      // Saturation vapour pressure over liquid water (Pa), then actual vapour pressure.
+      const float vapour_pressure = (rh / 100.0f) * 611.2f *
+          expf((17.67f * t) / (t + 243.5f));
+      if (!std::isfinite(vapour_pressure) || !std::isfinite(pressure) ||
+          pressure <= vapour_pressure) return NAN;
+      return 621.98f * vapour_pressure / (pressure - vapour_pressure);
+
+  - platform: template
+    name: "Wywiew - Wilgotnosc bezwzględna"
+    id: wywiew_hum_abs
+    unit_of_measurement: "g/kg"
+    state_class: measurement
+    accuracy_decimals: 2
+    icon: mdi:water-percent
+    update_interval: 30s
+    lambda: |-
+      const float t = id(wywiew_temp).state;
+      const float rh = id(wywiew_hum).state;
+      const float pressure = ${air_pressure_pa};
+      if (!std::isfinite(t) || !std::isfinite(rh) ||
+          t <= -243.5f || rh < 0.0f || rh > 100.0f) return NAN;
+      // Saturation vapour pressure over liquid water (Pa), then actual vapour pressure.
+      const float vapour_pressure = (rh / 100.0f) * 611.2f *
+          expf((17.67f * t) / (t + 243.5f));
+      if (!std::isfinite(vapour_pressure) || !std::isfinite(pressure) ||
+          pressure <= vapour_pressure) return NAN;
+      return 621.98f * vapour_pressure / (pressure - vapour_pressure);
+
   # ---- SDP810-125Pa ----
   - platform: sdp3x
     i2c_id: i2c_ch4

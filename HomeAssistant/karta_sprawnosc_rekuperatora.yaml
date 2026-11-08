@@ -1,0 +1,63 @@
+# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+# Required Notice: Copyright 2026 Sauron — OpenReku (https://github.com/Saur0o0n/OpenReku)
+# License: https://polyformproject.org/licenses/noncommercial/1.0.0
+
+# Wymaga ApexCharts Card oraz sensorów z rekuperator_sprawnosc_template.yaml.
+type: custom:apexcharts-card
+header:
+  show: true
+  title: Odzysk a temperatura czerpni
+  show_states: true
+  colorize_states: true
+graph_span: 24h
+update_interval: 1min
+apex_config:
+  chart:
+    height: 288px
+  stroke:
+    curve: straight
+    width: 2.5
+  legend:
+    position: bottom
+  tooltip:
+    shared: true
+    intersect: false
+all_series_config:
+  type: line
+  float_precision: 1
+  fill_raw: 'null'
+  extend_to: false
+  group_by:
+    duration: 5min
+    func: avg
+    fill: 'null'
+yaxis:
+- id: efficiency
+  min: ~0
+  max: ~100
+  decimals: 0
+  apex_config:
+    title:
+      text: Odzysk (%)
+- id: temperature
+  opposite: true
+  decimals: 1
+  apex_config:
+    title:
+      text: Czerpnia (°C)
+series:
+- entity: sensor.rekuperator_sprawnosc_temperaturowa
+  name: Temperatura
+  color: '#FF9800'
+  yaxis_id: efficiency
+  unit: '%'
+- entity: sensor.rekuperator_odzysk_wilgoci
+  name: Wilgoć
+  color: '#66BB6A'
+  yaxis_id: efficiency
+  unit: '%'
+- entity: sensor.kotlownia_rekuperator_czerpnia_temperatura
+  name: Czerpnia
+  color: '#2196F3'
+  yaxis_id: temperature
+  unit: °C

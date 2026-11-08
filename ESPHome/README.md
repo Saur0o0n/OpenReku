@@ -26,3 +26,7 @@ Nazwy wpisów w `secrets.yaml`:
 - `rekuperator_fallback_ap_password` — hasło awaryjnego punktu dostępowego urządzenia.
 
 Parametry w `substitutions`, przypisania GPIO, kanały I²C i kalibracje odpowiadają instalacji autora; przed użyciem z własnym urządzeniem należy je porównać z jego połączeniami. Konfiguracja pomija kanał 2 multipleksera ze względu na uszkodzony styk w tej instalacji.
+
+## Zawartość wilgoci
+
+Cztery sensory `czerpnia_hum_abs`, `nawiew_hum_abs`, `wywiew_hum_abs` i `wyrzutnia_hum_abs` obliczają zawartość pary wodnej w g/kg suchego powietrza z temperatury i wilgotności względnej. Korzystają z ciśnienia `air_pressure_pa` w `substitutions` (domyślnie 101325 Pa). W HA mają nazwy „… - Wilgotnosc bezwzględna” i są używane przez wykresy wilgotności oraz sensor odzysku wilgoci. Dotychczasowe odczyty wilgotności względnej w % pozostają dostępne.

@@ -1,0 +1,150 @@
+# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+# Required Notice: Copyright 2026 Sauron — OpenReku (https://github.com/Saur0o0n/OpenReku)
+# License: https://polyformproject.org/licenses/noncommercial/1.0.0
+
+# Wymaga kart: Tabbed Card (kinghat/tabbed-card) oraz ApexCharts Card.
+# Nie wymaga helpera. Wysokość wykresów: 288 px.
+# Pasmo g/kg suchego powietrza: 40–55% RH przy 21°C i 1013,25 hPa.
+# Przeliczenie: e = RH/100 * 6.112 * exp(17.67*T/(T+243.5)); x = 621.98*e/(p-e).
+# Jedna natywna oś ApexCharts; zakres automatyczny obejmuje również pasmo celu.
+type: custom:tabbed-card
+options:
+  defaultTabIndex: 0
+styles:
+  --mdc-typography-button-text-transform: none
+tabs:
+- attributes:
+    label: Wilgotność (%)
+  card:
+    type: custom:apexcharts-card
+    header:
+      show: true
+      title: ''
+      show_states: true
+      colorize_states: true
+    graph_span: 12h
+    update_interval: 5min
+    now:
+      show: true
+      label: Teraz
+    apex_config:
+      chart:
+        height: 288px
+      stroke:
+        curve: smooth
+        width: 2.5
+      legend:
+        position: bottom
+      tooltip:
+        shared: true
+        intersect: false
+      yaxis:
+        decimalsInFloat: 0
+        title:
+          text: '%'
+      annotations:
+        position: back
+        yaxis:
+        - 'y': 40
+          y2: 55
+          borderColor: '#81C784'
+          fillColor: '#81C784'
+          opacity: 0.12
+          label:
+            text: 'Cel: 40–55%'
+            position: left
+            textAnchor: start
+            style:
+              background: '#C8E6C9'
+              color: '#24452A'
+              fontSize: 11px
+              fontWeight: 400
+    all_series_config:
+      type: line
+      float_precision: 1
+      unit: '%'
+      group_by:
+        duration: 5min
+        func: avg
+    series:
+    - entity: sensor.kotlownia_rekuperator_czerpnia_wilgotnosc
+      name: Czerpnia
+      color: '#2196F3'
+    - entity: sensor.kotlownia_rekuperator_nawiew_wilgotnosc
+      name: Nawiew
+      color: '#FFC107'
+    - entity: sensor.kotlownia_rekuperator_wywiew_wilgotnosc
+      name: Wywiew
+      color: '#FF9800'
+    - entity: sensor.kotlownia_rekuperator_wyrzutnia_wilgotnosc
+      name: Wyrzutnia
+      color: '#F44336'
+- attributes:
+    label: Wilgotność (g/kg)
+  card:
+    type: custom:apexcharts-card
+    header:
+      show: true
+      title: ''
+      show_states: true
+      colorize_states: true
+    graph_span: 12h
+    update_interval: 5min
+    now:
+      show: true
+      label: Teraz
+    apex_config:
+      chart:
+        height: 288px
+      stroke:
+        curve: smooth
+        width: 2.5
+      legend:
+        position: bottom
+      tooltip:
+        shared: true
+        intersect: false
+      annotations:
+        position: back
+        yaxis:
+        - 'y': 6.16
+          y2: 8.51
+          borderColor: '#81C784'
+          fillColor: '#81C784'
+          opacity: 0.12
+          label:
+            text: 'Cel: 40–55% przy 21°C'
+            position: left
+            textAnchor: start
+            style:
+              background: '#C8E6C9'
+              color: '#24452A'
+              fontSize: 11px
+              fontWeight: 400
+          yAxisIndex: 0
+      yaxis:
+        decimalsInFloat: 1
+        title:
+          text: g/kg
+        min: 'EVAL:function(min) { return Math.min(Number.isFinite(min) ? min : 6, 6); }'
+        max: 'EVAL:function(max) { return Math.max(Number.isFinite(max) ? max : 9, 9); }'
+    all_series_config:
+      type: line
+      float_precision: 1
+      unit: g/kg
+      group_by:
+        duration: 5min
+        func: avg
+    series:
+    - entity: sensor.kotlownia_rekuperator_czerpnia_wilgotnosc_bezwzgledna
+      name: Czerpnia
+      color: '#2196F3'
+    - entity: sensor.kotlownia_rekuperator_nawiew_wilgotnosc_bezwzgledna
+      name: Nawiew
+      color: '#FFC107'
+    - entity: sensor.kotlownia_rekuperator_wywiew_wilgotnosc_bezwzgledna
+      name: Wywiew
+      color: '#FF9800'
+    - entity: sensor.kotlownia_rekuperator_wyrzutnia_wilgotnosc_bezwzgledna
+      name: Wyrzutnia
+      color: '#F44336'
